@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded';
+
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
     color: "#ff0a0a",
@@ -17,7 +18,7 @@ const StyledRating = styled(Rating)({
 //una vez optenidos esos datos borrar esto y trar los datos por props
 const exercise = {
   title: "Leg Extension",
-  difficulty: 3,
+  difficulty: 2,
   category: "Quadriceps",
   description: "Strengthens quadriceps muscles, improves knee stability and flexibility.",
   image: "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
@@ -26,15 +27,17 @@ const exercise = {
 const RatingFire = () => {
   return (
     <StyledRating
+    className="font-black"
       name="customized-color"
       defaultValue={exercise.difficulty}
       getLabelText={(value) => `${value} Flame${value !== 1 ? "s" : ""}`}
       precision={1}
       readOnly
-      icon={<LocalFireDepartmentIcon fontSize="inherit" />}
+      icon={<FitnessCenterRoundedIcon fontSize="inherit"/> }
       emptyIcon={
-        <LocalFireDepartmentIcon fontSize="inherit" style={{ opacity: 0.7 }} />
+        <FitnessCenterRoundedIcon fontSize="inherit" style={{ opacity: 0.7 }} />
       }
+      max={3}
     />
   );
 };
@@ -53,15 +56,14 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 
 const ExerciseCard = (/*{exercise}*/) => {
 
-    const [Series, setSeries] = useState(1);
-
+  const [Series, setSeries] = useState(1);
   return (
     <div className="bg-gray-100 w-full min-h-[100vh] flex justify-center items-center">
       <div className="h-[380px] w-[250px] bg-slate-700 rounded-xl shadow-2xl shadow-slate-950 overflow-hidden text-white">
         <div className="w-full flex justify-end">
-          <div className="bg-yellow-400 p-2 h-8 flex items-center justify-end rounded-es-full">
-            <div className="flex p-2">
-              <RatingFire />
+          <div className="bg-yellow-400 p-3 h-8 flex items-center justify-end rounded-es-2xl">
+            <div className="flex p-2 text-3xl">
+               <RatingFire/>             
             </div>
           </div>
         </div>

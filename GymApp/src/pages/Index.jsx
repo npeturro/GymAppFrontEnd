@@ -23,7 +23,7 @@ const Index = () => {
                     <div className="p-6 text-center">
                         <h2 className="text-3xl font-bold text-gray-800 mb-4">Crear rutina</h2>
                         <p className="text-gray-600 mb-6">Comienza una nueva rutina personalizada.</p>
-                        <button className="bg-yellow-500 text-white font-bold py-3 px-6 rounded-full hover:bg-yellow-600">
+                        <button className="bg-yellow-400 text-white font-bold py-3 px-6 rounded-full hover:bg-yellow-600">
                             Crear rutina
                         </button>
                     </div>
@@ -43,7 +43,7 @@ const Index = () => {
                     <div className="p-6 text-center">
                         <h2 className="text-3xl font-bold text-gray-800 mb-4">Ver rutina</h2>
                         <p className="text-gray-600 mb-6">Revisa y ajusta tu rutina actual.</p>
-                        <button className="bg-yellow-500 text-white font-bold py-3 px-6 rounded-full hover:bg-yellow-600">
+                        <button className="bg-yellow-400 text-white font-bold py-3 px-6 rounded-full hover:bg-yellow-600">
                             Ver rutina
                         </button>
                     </div>
