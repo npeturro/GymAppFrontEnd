@@ -4,6 +4,7 @@ import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded';
+import { useNewRoutine } from "../contexts/NewRoutineContext";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -17,6 +18,7 @@ const StyledRating = styled(Rating)({
 //Este objeto se uso de prueba hasta tener los datos desde el BackEnd,
 //una vez optenidos esos datos borrar esto y trar los datos por props
 const exercise = {
+  id: 0,
   title: "Leg Extension",
   difficulty: 2,
   category: "Quadriceps",
@@ -57,6 +59,13 @@ const HtmlTooltip = styled(({ className, ...props }) => (
 const ExerciseCard = (/*{exercise}*/) => {
 
   const [Series, setSeries] = useState(1);
+  const { addExerciseToNewRoutine } = useNewRoutine();
+
+  const handleAddExercise = () => {
+    addExerciseToNewRoutine({ID: exercise.id, Series: Series});
+  };
+
+
   return (
     <div className="bg-gray-100 w-full min-h-[100vh] flex justify-center items-center">
       <div className="h-[380px] w-[250px] bg-slate-700 rounded-xl shadow-2xl shadow-slate-950 overflow-hidden text-white">
@@ -114,7 +123,9 @@ const ExerciseCard = (/*{exercise}*/) => {
           </div>
         </div>
         <div className="w-full h-14 rounded-t-3xl bg-yellow-400 flex justify-center items-center">
-          <button className="bg-slate-700 text-white py-1 px-5 rounded-full font-semibold hover:bg-slate-600 active:bg-slate-500">
+          <button 
+          onClick={handleAddExercise}
+          className="bg-slate-700 text-white py-1 px-5 rounded-full font-semibold hover:bg-slate-600 active:bg-slate-500">
             Add to Routine
           </button>
         </div>
