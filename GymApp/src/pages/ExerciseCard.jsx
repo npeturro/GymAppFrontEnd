@@ -22,6 +22,7 @@ const exercise = {
   title: "Leg Extension",
   difficulty: 2,
   category: "Quadriceps",
+  machine: "Leg Extension Machine",
   description: "Strengthens quadriceps muscles, improves knee stability and flexibility.",
   image: "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
 };
@@ -62,7 +63,7 @@ const ExerciseCard = (/*{exercise}*/) => {
   const { addExerciseToNewRoutine } = useNewRoutine();
 
   const handleAddExercise = () => {
-    addExerciseToNewRoutine({ID: exercise.id, Series: Series});
+    addExerciseToNewRoutine({...exercise, Series: Series});
   };
 
 

@@ -4,6 +4,7 @@ import './App.css'
 import MainLayout from './pages/layout/MainLayout';
 import NewRutine from './pages/NewRutine';
 import Rutines from './pages/Rutines';
+import { Toaster } from 'sonner'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
 
   return (
     <div>
+      <Toaster position="top-center" />
       {<RouterProvider router={router} />}
     </div>
   )
