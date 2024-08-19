@@ -182,130 +182,132 @@ const RutinesView = (props) => {
             <div className='w-full h-full flex relative w-200 item-center justify-start'>
                 <button className='fixed bottom-[50%] left-5 bg-gray-100' onClick={() => navigate('/rutines')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></button>
             </div>
-            <div className="max-w-5xl mx-auto p-4 min-h-screen flex flex-col rounded-lg shadow-md bg-slate-700">
-                <div className="bg-slate-800 p-4 flex items-center justify-between">
-                    {isEditing ? (
-                        <input
-                            className="text-lg font-bold text-orange-500 uppercase bg-transparent border-b-2 border-orange-500 focus:outline-none"
-                            name="title"
-                            value={formValues.title}
-                            onChange={handleChange}
-                        />
-                    ) : (
-                        <h3 className="text-lg font-bold text-orange-500 uppercase">{rutine.title}</h3>
-                    )}
-                </div>
-
-                <div className="flex-grow p-6 text-white">
-                    <p className="font-semibold">Categoria</p>
-                    {isEditing ? (
-                        <input
-                            type="text"
-                            className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                            name="category"
-                            value={formValues.category}
-                            onChange={handleChange}
-                        />
-                    ) : (
-                        <p className="mb-4 text-white">{rutine.category}</p>
-                    )}
-
-                    <hr className="mt-2" />
-
-                    <p className="font-semibold text-white">Descripción</p>
-                    {isEditing ? (
-                        <textarea
-                            className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                            name="description"
-                            value={formValues.description}
-                            onChange={handleChange}
-                        />
-                    ) : (
-                        <p className="mb-4 text-white">{rutine.description}</p>
-                    )}
-                    <hr className="mt-2" />
-                    <p className="font-semibold text-white">Duración</p>
-                    {isEditing ? (
-                        <input
-                            type="number"
-                            className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                            name="duration"
-                            value={formValues.duration}
-                            onChange={handleChange}
-                        />
-                    ) : (
-                        <p className="mb-4 text-white">{rutine.duration} minutos</p>
-                    )}
-                    <hr className="mt-2" />
-                    <p className="font-semibold text-white">Dificultad</p>
-                    {isEditing ? (
-                        <input
-                            className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                            name="difficulty"
-                            value={formValues.difficulty}
-                            onChange={handleChange}
-                        />
-                    ) : (
-                        <p className="mb-4 text-white">{rutine.difficulty}</p>
-                    )}
-                    <hr className="mt-2" />
-                    <p className="font-semibold text-white">Ejercicios</p>
-                    <div className="flex flex-wrap gap-8 justify-center">
-                        {formValues.exercices.map((exercise) => (
-                            <AddExercise
-                                key={exercise.id}
-                                exercise={exercise}
-                                onEdit={handleEditExercise}
-                                onDelete={handleDeleteExercise}
+            <div className="bg-gray-100 p-4">
+                <div className="max-w-5xl mx-auto p-4 min-h-screen flex flex-col rounded-lg shadow-md bg-slate-700">
+                    <div className="bg-slate-800 p-4 flex items-center justify-between">
+                        {isEditing ? (
+                            <input
+                                className="text-lg font-bold text-orange-500 uppercase bg-transparent border-b-2 border-orange-500 focus:outline-none"
+                                name="title"
+                                value={formValues.title}
+                                onChange={handleChange}
                             />
-                        ))}
+                        ) : (
+                            <h3 className="text-lg font-bold text-orange-500 uppercase">{rutine.title}</h3>
+                        )}
                     </div>
-                    {isEditing && (
-                        <>
-                            <h3 className="text-xl text-white font-semibold mb-4">Agregar ejercicios</h3>
-                            <div className="flex flex-wrap gap-6 justify-center">
-                                {exercises.map((exercise) => (
-                                    <ExerciseCard
-                                        key={exercise.id}
-                                        exercise={exercise}
-                                        onAdd={() => handleAddExercise(exercise)}
-                                    />
-                                ))}
-                            </div>
-                        </>
-                    )}
-                </div>
 
-                <div className="p-4 flex justify-end mt-auto">
-                    {isEditing ? (
-                        <>
+                    <div className="flex-grow p-6 text-white">
+                        <p className="font-semibold">Categoria</p>
+                        {isEditing ? (
+                            <input
+                                type="text"
+                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                name="category"
+                                value={formValues.category}
+                                onChange={handleChange}
+                            />
+                        ) : (
+                            <p className="mb-4 text-white">{rutine.category}</p>
+                        )}
+
+                        <hr className="mt-2" />
+
+                        <p className="font-semibold text-white">Descripción</p>
+                        {isEditing ? (
+                            <textarea
+                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                name="description"
+                                value={formValues.description}
+                                onChange={handleChange}
+                            />
+                        ) : (
+                            <p className="mb-4 text-white">{rutine.description}</p>
+                        )}
+                        <hr className="mt-2" />
+                        <p className="font-semibold text-white">Duración</p>
+                        {isEditing ? (
+                            <input
+                                type="number"
+                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                name="duration"
+                                value={formValues.duration}
+                                onChange={handleChange}
+                            />
+                        ) : (
+                            <p className="mb-4 text-white">{rutine.duration} minutos</p>
+                        )}
+                        <hr className="mt-2" />
+                        <p className="font-semibold text-white">Dificultad</p>
+                        {isEditing ? (
+                            <input
+                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                name="difficulty"
+                                value={formValues.difficulty}
+                                onChange={handleChange}
+                            />
+                        ) : (
+                            <p className="mb-4 text-white">{rutine.difficulty}</p>
+                        )}
+                        <hr className="mt-2" />
+                        <p className="font-semibold text-white">Ejercicios</p>
+                        <div className="flex flex-wrap gap-8 justify-center">
+                            {formValues.exercices.map((exercise) => (
+                                <AddExercise
+                                    key={exercise.id}
+                                    exercise={exercise}
+                                    onEdit={handleEditExercise}
+                                    onDelete={handleDeleteExercise}
+                                />
+                            ))}
+                        </div>
+                        {isEditing && (
+                            <>
+                                <h3 className="text-xl text-white font-semibold mb-4">Agregar ejercicios</h3>
+                                <div className="flex flex-wrap gap-6 justify-center">
+                                    {exercises.map((exercise) => (
+                                        <ExerciseCard
+                                            key={exercise.id}
+                                            exercise={exercise}
+                                            onAdd={() => handleAddExercise(exercise)}
+                                        />
+                                    ))}
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    <div className="p-4 flex justify-end mt-auto">
+                        {isEditing ? (
+                            <>
+                                <button
+                                    className="bg-yellow-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
+                                    onClick={handleSave}
+                                >
+                                    Guardar
+                                </button>
+                                <button
+                                    className="bg-gray-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
+                                    onClick={handleCancel}
+                                >
+                                    Cancelar
+                                </button>
+                            </>
+                        ) : (
                             <button
-                                className="bg-green-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
-                                onClick={handleSave}
+                                className="bg-yellow-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
+                                onClick={() => setIsEditing(true)}
                             >
-                                Guardar
+                                Editar
                             </button>
-                            <button
-                                className="bg-gray-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
-                                onClick={handleCancel}
-                            >
-                                Cancelar
-                            </button>
-                        </>
-                    ) : (
+                        )}
                         <button
-                            className="bg-yellow-400 text-gray-800 py-2 px-4 rounded-full font-semibold cursor-pointer border-none mr-2"
-                            onClick={() => setIsEditing(true)}
+                            className="bg-gray-600 text-white py-2 px-4 rounded-full font-semibold cursor-pointer border-none"
+                            onClick={handleDelete}
                         >
-                            Editar
+                            Eliminar
                         </button>
-                    )}
-                    <button
-                        className="bg-gray-600 text-white py-2 px-4 rounded-full font-semibold cursor-pointer border-none"
-                        onClick={handleDelete}
-                    >
-                        Eliminar
-                    </button>
+                    </div>
                 </div>
             </div>
         </>
