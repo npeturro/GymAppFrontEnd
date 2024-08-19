@@ -176,7 +176,7 @@ const RutineForm = () => {
         <hr className="mb-2 mt-8" />
 
         <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2">Ejercicios agregados</h3>
+          <h3 className="text-xl text-white font-semibold mb-2">Ejercicios agregados</h3>
 
           <div className="flex flex-wrap gap- justify-center">
             {NewRoutine.map((exercise) => (
@@ -186,7 +186,7 @@ const RutineForm = () => {
         </div>
         <hr className="mb-2 mt-8" />
 
-        <h3 className="text-xl font-semibold mb-4">Lista de Ejercicios</h3>
+        <h3 className="text-xl text-white font-semibold mb-4">Lista de Ejercicios</h3>
         <div className="flex flex-wrap gap-6 justify-center">
           {exercises.map((exercise) => (
             <ExerciseCard key={exercise.id} exercise={exercise} />
