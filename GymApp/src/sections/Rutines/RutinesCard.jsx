@@ -1,13 +1,15 @@
 import { useState } from "react";
-import RutinesModal from "./RutinesModal";
+import RutinesModal from "./RutinesView";
+import { useNavigate } from "react-router-dom";
 
 const RutinesCard = ({ rutines }) => {
     const [open, setOpen] = useState(false);
     const [selectedRutine, setSelectedRutine] = useState(null);
+    const navigate = useNavigate();
 
-    const handleOpen = (rutine) => {
+    const handleView = (rutine) => {
         setSelectedRutine(rutine);
-        setOpen(true);
+        navigate('/rutines/view', {state: {rutine}})
     };
 
     const handleClose = () => setOpen(false);
@@ -31,7 +33,7 @@ const RutinesCard = ({ rutines }) => {
                         <div className="w-full h-14 rounded-t-3xl bg-yellow-400 flex justify-center items-center">
                             <button
                                 className="bg-gray-800 text-white py-2 px-5 rounded-full font-semibold cursor-pointer border-none"
-                                onClick={() => handleOpen(rutine)}
+                                onClick={() => handleView(rutine)}
                             >
                                 VER MÁS
                             </button>
