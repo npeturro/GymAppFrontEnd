@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
-import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded';
+import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import { useNewRoutine } from "../../contexts/NewRoutineContext";
 
 const StyledRating = styled(Rating)({
@@ -14,27 +14,6 @@ const StyledRating = styled(Rating)({
     color: "#ff3d47",
   },
 });
-
-//Este objeto se uso de prueba hasta tener los datos desde el BackEnd,
-//una vez optenidos esos datos borrar esto y trar los datos por props
-
-const RatingFire = () => {
-  return (
-    <StyledRating
-      className="font-black"
-      name="customized-color"
-      defaultValue={1}
-      getLabelText={(value) => `${value} Flame${value !== 1 ? "s" : ""}`}
-      precision={1}
-      readOnly
-      icon={<FitnessCenterRoundedIcon fontSize="inherit" />}
-      emptyIcon={
-        <FitnessCenterRoundedIcon fontSize="inherit" style={{ opacity: 0.7 }} />
-      }
-      max={3}
-    />
-  );
-};
 
 const HtmlTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -48,24 +27,38 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const ExerciseCard = ({exercise}) => {
-
+const ExerciseCard = ({ exercise }) => {
   const [Series, setSeries] = useState(1);
   const { addExerciseToNewRoutine } = useNewRoutine();
 
   const handleAddExercise = (e) => {
     e.preventDefault();
-    addExerciseToNewRoutine({ ...exercise, Series: Series });
+    addExerciseToNewRoutine({ ...exercise, series: Series });
   };
 
-
   return (
-
     <div className="h-[280px] w-[200px] bg-slate-700 rounded-xl shadow-lg shadow-slate-950 overflow-hidden text-white">
       <div className="w-full flex justify-end">
         <div className="bg-yellow-400 p-2 h-6 flex items-center justify-end rounded-es-2xl">
           <div className="flex p-1 text-xl">
-            <RatingFire />
+            <StyledRating
+              className="font-black"
+              name="customized-color"
+              defaultValue={exercise.difficulty}
+              getLabelText={(value) =>
+                `${value} Flame${value !== 1 ? "s" : ""}`
+              }
+              precision={1}
+              readOnly
+              icon={<FitnessCenterRoundedIcon fontSize="inherit" />}
+              emptyIcon={
+                <FitnessCenterRoundedIcon
+                  fontSize="inherit"
+                  style={{ opacity: 0.7 }}
+                />
+              }
+              max={3}
+            />
           </div>
         </div>
       </div>
@@ -128,13 +121,11 @@ const ExerciseCard = ({exercise}) => {
         </button>
       </div>
     </div>
-
   );
 };
 
 ExerciseCard.propTypes = {
   exercise: PropTypes.object.isRequired,
-
 };
 
 export default ExerciseCard;
