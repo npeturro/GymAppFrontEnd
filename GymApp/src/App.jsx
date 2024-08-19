@@ -4,7 +4,6 @@ import './App.css'
 import MainLayout from './pages/layout/MainLayout';
 import NewRutine from './pages/NewRutine';
 import Rutines from './pages/Rutines';
-import RutinesView from './sections/Rutines/RutinesView';
 
 function App() {
 
@@ -44,7 +43,8 @@ function App() {
   ]);
 
   return (
-    <div>
+    <div className="bg-gray-100 w-full min-h-screen">
+      <Toaster richColors/>
       {<RouterProvider router={router} />}
     </div>
   )
