@@ -4,6 +4,8 @@ import './App.css'
 import MainLayout from './pages/layout/MainLayout';
 import NewRutine from './pages/NewRutine';
 import Rutines from './pages/Rutines';
+import RutinesView from './sections/Rutines/RutinesView';
+import { Toaster } from 'sonner';
 
 function App() {
 
