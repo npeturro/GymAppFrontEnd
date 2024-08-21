@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React from 'react';
 import Index from './pages/Index';
 import './App.css'
 import MainLayout from './pages/layout/MainLayout';
@@ -8,6 +9,7 @@ import RutinesView from './sections/Rutines/RutinesView';
 import { Toaster } from 'sonner';
 
 function App() {
+
 
   const router = createBrowserRouter([
     {
@@ -46,7 +48,7 @@ function App() {
 
   return (
     <div className="bg-gray-100 w-full min-h-screen">
-      <Toaster richColors/>
+      <Toaster richColors />
       {<RouterProvider router={router} />}
     </div>
   )

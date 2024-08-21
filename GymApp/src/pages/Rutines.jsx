@@ -1,4 +1,5 @@
 import RutinesCard from "../sections/Rutines/RutinesCard";
+import { useNavigate } from "react-router-dom";
 const Rutines = () => {
     const rutines = [
         {
@@ -11,17 +12,25 @@ const Rutines = () => {
             exercices: [
                 {
                     id: 1,
-                    title: "Squats",
-                    difficulty: 3,
-                    category: "Legs",
-                    description: "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
+                    title: "Leg Extension",
+                    difficulty: 2,
+                    category: "Quadriceps",
+                    description:
+                        "Strengthens quadriceps muscles, improves knee stability and flexibility.",
+                    image:
+                        "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
+                    machine: "Leg Extension Machine",
                 },
                 {
                     id: 2,
-                    title: "Lunges",
-                    difficulty: 2,
+                    title: "Squats",
+                    difficulty: 3,
                     category: "Legs",
-                    description: "Strengthens quads, hamstrings, and glutes. Enhances balance and coordination.",
+                    description:
+                        "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
+                    image:
+                        "https://www.dir.cat/blog/wp-content/uploads/2019/05/video-tutorial-air-squat.jpg",
+                    machine: null,
                 },
             ],
         },
@@ -34,26 +43,27 @@ const Rutines = () => {
             duration: "45",
             exercices: [
                 {
-                    id: 1,
-                    title: "Bench Press",
-                    difficulty: 4,
-                    category: "Upper Body",
-                    description: "Targets the chest, shoulders, and triceps. Great for building upper body strength.",
-                },
-                {
-                    id: 2,
-                    title: "Push-Ups",
-                    difficulty: 3,
-                    category: "Upper Body",
-                    description: "Strengthens the chest, shoulders, and triceps. Can be modified to increase difficulty.",
-                },
-                {
                     id: 3,
-                    title: "Dumbbell Flyes",
+                    title: "Bench Press",
                     difficulty: 3,
-                    category: "Upper Body",
-                    description: "Focuses on the chest muscles. Helps in expanding the chest and improving muscle definition.",
-                }
+                    category: "Chest",
+                    description:
+                        "Builds chest strength and mass, also engages triceps and shoulders.",
+                    image:
+                        "https://blogscdn.thehut.net/app/uploads/sites/478/2021/06/shutterstock_336330497opt_hero_1624870682.jpg",
+                    machine: "Bench Press Machine",
+                },
+                {
+                    id: 4,
+                    title: "Deadlift",
+                    difficulty: 3,
+                    category: "Back",
+                    description:
+                        "Strengthens back, glutes, hamstrings, and core. Enhances overall power.",
+                    image:
+                        "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2023/04/Beginner-Deadlift-Workout.jpg?fit=1894%2C1337&ssl=1",
+                    machine: null,
+                },
             ],
         },
         {
@@ -65,26 +75,38 @@ const Rutines = () => {
             duration: "50",
             exercices: [
                 {
-                    id: 1,
+                    id: 5,
+                    title: "Bicep Curl",
+                    difficulty: 1,
+                    category: "Arms",
+                    description:
+                        "Isolates and strengthens biceps. Can be done with dumbbells or a barbell.",
+                    image:
+                        "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2018/01/Barbell-Biceps-Curl-Bodybuilder-1109.jpg?quality=86&strip=all",
+                    machine: "Bicep Curl Machine",
+                },
+                {
+                    id: 6,
+                    title: "Tricep Dips",
+                    difficulty: 2,
+                    category: "Arms",
+                    description:
+                        "Targets triceps and shoulders, can be performed on parallel bars or a bench.",
+                    image:
+                        "https://www.220triathlon.com/wp-content/uploads/sites/4/2020/05/10529-27bf444.jpg?w=700",
+                    machine: "Parallel Bars",
+                },
+                {
+                    id: 7,
                     title: "Pull-Ups",
-                    difficulty: 4,
-                    category: "Upper Body",
-                    description: "Targets the upper back, biceps, and shoulders. Effective for building upper body strength.",
-                },
-                {
-                    id: 2,
-                    title: "Rows",
                     difficulty: 3,
-                    category: "Upper Body",
-                    description: "Strengthens the middle back and improves posture. Can be done with dumbbells or barbells.",
+                    category: "Back",
+                    description:
+                        "Strengthens upper back, shoulders, and arms. Requires bodyweight pulling strength.",
+                    image:
+                        "https://ironbullstrength.com/cdn/shop/articles/how-to-do-pull-ups-for-a-bigger-and-shredded-back.webp?v=1692300888",
+                    machine: null,
                 },
-                {
-                    id: 3,
-                    title: "Lat Pulldowns",
-                    difficulty: 3,
-                    category: "Upper Body",
-                    description: "Focuses on the latissimus dorsi muscles in the back. Helps in building a V-shaped torso.",
-                }
             ],
         },
         {
@@ -113,14 +135,18 @@ const Rutines = () => {
         },
     ];
 
+    const navigate = useNavigate()
 
     return (
-
-        <div className="flex flex-col items-center justify-center min-h-screen bg-slate-100 p-6">
-            <h1 className="text-4xl font-bold text-gray-800 mb-10">Listado de rutinas</h1>
-            <RutinesCard rutines={rutines} />
-        </div>
-
+        <>
+            <div className='w-full h-full flex relative w-200 item-center justify-start'>
+                <button className='fixed bottom-[50%] left-5 bg-gray-100' onClick={() => navigate('/')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></button>
+            </div>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-slate-100 p-6">
+                <h1 className="text-4xl font-bold text-gray-800 mb-4">Listado de rutinas</h1>
+                <RutinesCard rutines={rutines} />
+            </div>
+        </>
     );
 };
 
