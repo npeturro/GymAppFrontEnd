@@ -2,6 +2,9 @@ import ExerciseCard from "./ExerciseCard";
 import AddExercise from "./AddExercise";
 import { useNewRoutine } from "../../contexts/NewRoutineContext";
 import { useForm } from "react-hook-form";
+import { useEffect, useRef, useState } from "react";
+import axios from 'axios';
+import { toast } from "sonner";
 
 const exercises = [
     {
@@ -117,13 +120,55 @@ const exercises = [
   ];
 
 const RutineForm = () => {
-  const { NewRoutine } = useNewRoutine();
+  const { ExercisesNewRoutine } = useNewRoutine();
   
-  const { register, handleSubmit, formState: {errors}} = useForm()
-  
-  const onSubmit = (data) => {
-    
-    console.log(data)
+  const { register, handleSubmit, formState: {errors}, setError, clearErrors} = useForm()
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  const exercisesErrorRef = useRef(null);
+
+  useEffect(() => {
+    if (hasSubmitted) {
+      if (ExercisesNewRoutine.length < 3) {
+        exercisesErrorRef.current.scrollIntoView({ behavior: 'smooth' });
+        setError('ExercisesNewRoutine', {
+          type: 'manual',
+          message: 'Debes agregar al menos 3 ejercicios a la rutina',
+        });
+      } else {
+        clearErrors('ExercisesNewRoutine');
+      }
+    }
+  }, [ExercisesNewRoutine, setError, clearErrors, hasSubmitted]);
+
+  const onSubmit = async (data) => {
+
+    setHasSubmitted(true);
+
+    if (ExercisesNewRoutine.length < 3) {
+      setError('ExercisesNewRoutine', {
+        type: 'manual',
+        message: 'Debes agregar al menos 3 ejercicios a la rutina',
+      });
+      return;
+    }
+
+    try {
+      const response = await axios.post('/api/add-routine', {
+        Nombre: data.RoutineName,
+        Descripcion: data.RoutineDescription,
+        exercises: ExercisesNewRoutine.map(e => (
+          { 
+            ID: e.id,
+            Series: e.series
+          }
+        )),
+      })
+      console.log('Respuesta del servidor:', response.data);
+    } catch (error) {
+      toast.error('Error al querer agregar la nueva rutina')
+      console.error('Error al enviar los datos:', error);
+    }
+
   }
 
   return (
@@ -176,10 +221,11 @@ const RutineForm = () => {
         <hr className="mb-2 mt-8" />
 
         <div className="mb-4">
-          <h3 className="text-xl text-white font-semibold mb-2">Ejercicios agregados</h3>
+          <h3 className="text-xl font-semibold mb-2" ref={exercisesErrorRef}>Ejercicios agregados</h3>
+          {errors.ExercisesNewRoutine  && <span className="text-red-500 text-sm font-semibold" >Debes agregar al menos 3 ejercicios a la rutina</span>}
 
           <div className="flex flex-wrap gap- justify-center">
-            {NewRoutine.map((exercise) => (
+            {ExercisesNewRoutine.map((exercise) => (
               <AddExercise key={exercise.id} exercise={exercise} />
             ))}
           </div>

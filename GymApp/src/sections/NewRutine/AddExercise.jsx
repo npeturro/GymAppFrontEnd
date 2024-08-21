@@ -2,7 +2,8 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
+import { useNewRoutine } from "../../contexts/NewRoutineContext";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -14,12 +15,15 @@ const StyledRating = styled(Rating)({
 });
 
 const AddExercise = ({ exercise }) => {
+
+  const { removeExerciseToNewRoutine } = useNewRoutine();
+  
   return (
     <div className="relative h-[200px] w-[160px]">
       <img src={exercise.image} alt="" className="h-full w-full object-cover" />
       <div className="absolute inset-0 flex flex-col items-center bg-black/50 opacity-0 transition-opacity duration-300 hover:opacity-100">
         <div className="flex w-full justify-end p-1">
-          <Button>
+          <IconButton aria-label="delete" color="error" onClick={() => removeExerciseToNewRoutine(exercise)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -35,7 +39,7 @@ const AddExercise = ({ exercise }) => {
               <path d="M18 6l-12 12" />
               <path d="M6 6l12 12" />
             </svg>
-          </Button>
+          </IconButton>
         </div>
         <h4 className="font-bold text-white">{exercise.title}</h4>
         <p className="font-semibold text-yellow-400">
