@@ -126,6 +126,13 @@ const RutinesView = (props) => {
     const [formValues, setFormValues] = useState(state.rutine);
     const [isEditing, setIsEditing] = useState(false);
 
+    // Buscador
+    const [searchRutine, setSearchRutine] = useState("");
+
+    const filteredRutine = formValues.exercices.filter((exercise) =>
+        exercise.name.toLowerCase().includes(searchRutine.toLowerCase())
+    );
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
@@ -249,6 +256,28 @@ const RutinesView = (props) => {
                         ) : (
                             <p className="mb-4 text-white">{rutine.difficulty}</p>
                         )}
+
+                {/* BUSCADOR */}
+                <div className="mb-4">
+                    <input
+                        type="text"
+                        placeholder="Buscar ejercicio por nombre"
+                        className="p-2 w-full border-2 border-gray-300 rounded"
+                        value={searchRutine}
+                        onChange={(e) => setSearchRutine(e.target.value)}
+                    />
+                </div>
+
+                <div className='flex flex-wrap gap-8 justify-center'>
+                    {filteredRutine.map((exercise) => (
+                        <ExerciseCard
+                            key={exercise.id}
+                            exercise={exercise}
+                            isEditing={isEditing}
+                            onEdit={(updatedExercise) => handleEditExercise(exercise.id, updatedExercise)}
+                        />
+                    ))}
+                </div>
                         <hr className="mt-2" />
                         <p className="font-semibold text-white">Ejercicios</p>
                         <div className="flex flex-wrap gap-8 justify-center">
