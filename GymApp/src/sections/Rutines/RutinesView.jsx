@@ -125,6 +125,9 @@ const RutinesView = (props) => {
     const [rutine, setRutine] = useState(state.rutine);
     const [formValues, setFormValues] = useState(state.rutine);
     const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate()
+
+    const [ExercisesRoutine, setNewRoutine] = useState(rutine.exercices);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -135,39 +138,18 @@ const RutinesView = (props) => {
     };
 
     const handleSave = () => {
-        setRutine(formValues);
+        const updatedRutine = {
+            ...formValues,
+            exercices: ExercisesRoutine
+        };
+        setRutine(updatedRutine);
         setIsEditing(false);
-
-        toast.success('Rutina editada con éxito');
-        console.log(formValues);
     };
 
     const handleCancel = () => {
         setFormValues(rutine);
+        setNewRoutine(rutine.exercices)
         setIsEditing(false);
-    };
-
-    const handleEditExercise = (id, updatedExercise) => {
-        setFormValues({
-            ...formValues,
-            exercices: formValues.exercices.map(exercise =>
-                exercise.id === id ? updatedExercise : exercise
-            )
-        });
-    };
-
-    const handleAddExercise = (newExercise) => {
-        setFormValues({
-            ...formValues,
-            exercices: [...formValues.exercices, newExercise]
-        });
-    };
-
-    const handleDeleteExercise = (id) => {
-        setFormValues({
-            ...formValues,
-            exercices: formValues.exercices.filter(exercise => exercise.id !== id)
-        });
     };
 
     const handleDelete = () => {
@@ -175,7 +157,6 @@ const RutinesView = (props) => {
         console.log(formValues);
     }
 
-    const navigate = useNavigate()
 
     return (
         <>
@@ -253,12 +234,12 @@ const RutinesView = (props) => {
                         <hr className="mt-2" />
                         <p className="font-semibold text-white">Ejercicios</p>
                         <div className="flex flex-wrap gap-8 justify-center">
-                            {formValues.exercices.map((exercise) => (
+                            {ExercisesRoutine.map((exercise) => (
                                 <AddExercise
                                     key={exercise.id}
                                     exercise={exercise}
-                                    onEdit={handleEditExercise}
-                                    onDelete={handleDeleteExercise}
+                                    setNewRoutine={setNewRoutine}
+                                    view={isEditing ? true : false}
                                 />
                             ))}
                         </div>
@@ -270,7 +251,8 @@ const RutinesView = (props) => {
                                         <ExerciseCard
                                             key={exercise.id}
                                             exercise={exercise}
-                                            onAdd={() => handleAddExercise(exercise)}
+                                            setNewRoutine={setNewRoutine}
+                                            ExercisesNewRoutine={ExercisesRoutine}
                                         />
                                     ))}
                                 </div>
