@@ -14,7 +14,7 @@ const StyledRating = styled(Rating)({
   },
 });
 
-const AddExercise = ({ exercise }) => {
+const AddExercise = ({ exercise, setNewRoutine }) => {
 
   const { removeExerciseToNewRoutine } = useNewRoutine();
   
@@ -23,7 +23,7 @@ const AddExercise = ({ exercise }) => {
       <img src={exercise.image} alt="" className="h-full w-full object-cover" />
       <div className="absolute inset-0 flex flex-col items-center bg-black/50 opacity-0 transition-opacity duration-300 hover:opacity-100">
         <div className="flex w-full justify-end p-1">
-          <IconButton aria-label="delete" color="error" onClick={() => removeExerciseToNewRoutine(exercise)}>
+          <IconButton aria-label="delete" color="error" onClick={() => removeExerciseToNewRoutine(exercise, setNewRoutine)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -70,6 +70,7 @@ const AddExercise = ({ exercise }) => {
 
 AddExercise.propTypes = {
   exercise: PropTypes.object.isRequired,
+  setNewRoutine: PropTypes.func.isRequired,
 };
 
 export default AddExercise;

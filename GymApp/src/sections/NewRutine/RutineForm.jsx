@@ -120,7 +120,9 @@ const exercises = [
   ];
 
 const RutineForm = () => {
-  const { ExercisesNewRoutine } = useNewRoutine();
+
+  const [ExercisesNewRoutine, setNewRoutine] = useState([]);
+
   
   const { register, handleSubmit, formState: {errors}, setError, clearErrors} = useForm()
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -226,7 +228,7 @@ const RutineForm = () => {
 
           <div className="flex flex-wrap gap- justify-center">
             {ExercisesNewRoutine.map((exercise) => (
-              <AddExercise key={exercise.id} exercise={exercise} />
+              <AddExercise key={exercise.id} exercise={exercise} setNewRoutine={setNewRoutine}/>
             ))}
           </div>
         </div>
@@ -235,7 +237,7 @@ const RutineForm = () => {
         <h3 className="text-xl text-white font-semibold mb-4">Lista de Ejercicios</h3>
         <div className="flex flex-wrap gap-6 justify-center">
           {exercises.map((exercise) => (
-            <ExerciseCard key={exercise.id} exercise={exercise} />
+            <ExerciseCard key={exercise.id} exercise={exercise} setNewRoutine={setNewRoutine} ExercisesNewRoutine={ExercisesNewRoutine}/>
           ))}
         </div>
 

@@ -27,13 +27,13 @@ const HtmlTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-const ExerciseCard = ({ exercise }) => {
+const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
   const [Series, setSeries] = useState(1);
   const { addExerciseToNewRoutine } = useNewRoutine();
 
   const handleAddExercise = (e) => {
     e.preventDefault();
-    addExerciseToNewRoutine({ ...exercise, series: Series });
+    addExerciseToNewRoutine({ ...exercise, series: Series }, ExercisesNewRoutine, setNewRoutine);
   };
 
   return (
@@ -126,6 +126,8 @@ const ExerciseCard = ({ exercise }) => {
 
 ExerciseCard.propTypes = {
   exercise: PropTypes.object.isRequired,
+  setNewRoutine: PropTypes.func.isRequired,
+  ExercisesNewRoutine: PropTypes.array.isRequired,
 };
 
 export default ExerciseCard;
