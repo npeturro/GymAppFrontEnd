@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseCard from "../NewRutine/ExerciseCard";
-import { toast } from "sonner"
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "sonner";
 import AddExercise from "../NewRutine/AddExercise";
-import { useNavigate } from "react-router-dom";
 
 const exercises = [
     {
@@ -119,75 +117,116 @@ const exercises = [
     },
 ];
 
-const RutinesView = (props) => {
+
+const RutinesView = () => {
     const location = useLocation();
     const { state } = location;
+    const navigate = useNavigate();
+
     const [rutine, setRutine] = useState(state.rutine);
     const [formValues, setFormValues] = useState(state.rutine);
+    const [errors, setErrors] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const navigate = useNavigate()
-
     const [ExercisesRoutine, setNewRoutine] = useState(rutine.exercices);
+
+    const validate = () => {
+        const newErrors = {};
+        if (!formValues.title) newErrors.title = "El nombre es obligatorio";
+        if (!formValues.category) newErrors.category = "La categoría es obligatoria";
+        if (!formValues.description) newErrors.description = "La descripción es obligatoria";
+        if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
+        if (!formValues.difficulty) newErrors.difficulty = "La dificultad es obligatoria";
+        if (ExercisesRoutine.length === 0) newErrors.exercices = "Debe agregar al menos un ejercicio";
+        return newErrors;
+    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormValues({
             ...formValues,
-            [name]: value
+            [name]: value,
         });
     };
 
     const handleSave = () => {
-        const updatedRutine = {
-            ...formValues,
-            exercices: ExercisesRoutine
-        };
-        setRutine(updatedRutine);
-        setIsEditing(false);
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+        } else {
+            const updatedRutine = {
+                ...formValues,
+                exercices: ExercisesRoutine,
+            };
+            setRutine(updatedRutine);
+            setIsEditing(false);
+            toast.success("Rutina guardada con éxito");
+        }
     };
 
     const handleCancel = () => {
         setFormValues(rutine);
-        setNewRoutine(rutine.exercices)
+        setNewRoutine(rutine.exercices);
         setIsEditing(false);
+        setErrors({});
     };
 
     const handleDelete = () => {
-        toast.success('Rutina eliminada con éxito');
-        console.log(formValues);
-    }
-
+        toast.success("Rutina eliminada con éxito");
+        navigate('/rutines');
+    };
 
     return (
         <>
-            <div className='w-full h-full flex relative w-200 item-center justify-start'>
-                <button className='fixed bottom-[50%] left-5 bg-gray-100' onClick={() => navigate('/rutines')}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M15 6l-6 6l6 6" /></svg></button>
+            <div className="w-full h-full flex relative w-200 item-center justify-start">
+                <button className="fixed bottom-[50%] left-5 bg-gray-100" onClick={() => navigate('/rutines')}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-left"
+                    >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M15 6l-6 6l6 6" />
+                    </svg>
+                </button>
             </div>
             <div className="bg-gray-100 p-2">
                 <div className="max-w-5xl mx-auto p-4 min-h-screen flex flex-col rounded-lg shadow-md bg-slate-700">
                     <div className="bg-slate-800 p-4 flex items-center justify-between">
                         {isEditing ? (
-                            <input
-                                className="text-lg font-bold text-orange-500 uppercase bg-transparent border-b-2 border-orange-500 focus:outline-none"
-                                name="title"
-                                value={formValues.title}
-                                onChange={handleChange}
-                            />
+                            <>
+                                <input
+                                    className="text-lg font-bold text-orange-500 uppercase bg-transparent border-b-2 border-orange-500 focus:outline-none"
+                                    name="title"
+                                    value={formValues.title}
+                                    onChange={handleChange}
+                                />
+                                {errors.title && <p className="text-red-500">{errors.title}</p>}
+                            </>
                         ) : (
                             <h3 className="text-lg font-bold text-orange-500 uppercase">{rutine.title}</h3>
                         )}
                     </div>
 
                     <div className="flex-grow p-6 text-white">
-                        <p className="font-semibold">Categoria</p>
+                        <p className="font-semibold">Categoría</p>
                         {isEditing ? (
-                            <input
-                                type="text"
-                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                                name="category"
-                                value={formValues.category}
-                                onChange={handleChange}
-                            />
+                            <>
+                                <input
+                                    type="text"
+                                    className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                    name="category"
+                                    value={formValues.category}
+                                    onChange={handleChange}
+                                />
+                                {errors.category && <p className="text-red-500">{errors.category}</p>}
+                            </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.category}</p>
                         )}
@@ -196,42 +235,57 @@ const RutinesView = (props) => {
 
                         <p className="font-semibold text-white">Descripción</p>
                         {isEditing ? (
-                            <textarea
-                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                                name="description"
-                                value={formValues.description}
-                                onChange={handleChange}
-                            />
+                            <>
+                                <textarea
+                                    className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                    name="description"
+                                    value={formValues.description}
+                                    onChange={handleChange}
+                                />
+                                {errors.description && <p className="text-red-500">{errors.description}</p>}
+                            </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.description}</p>
                         )}
+
                         <hr className="mt-2" />
+
                         <p className="font-semibold text-white">Duración</p>
                         {isEditing ? (
-                            <input
-                                type="number"
-                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                                name="duration"
-                                value={formValues.duration}
-                                onChange={handleChange}
-                            />
+                            <>
+                                <input
+                                    type="number"
+                                    className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                    name="duration"
+                                    value={formValues.duration}
+                                    onChange={handleChange}
+                                />
+                                {errors.duration && <p className="text-red-500">{errors.duration}</p>}
+                            </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.duration} minutos</p>
                         )}
+
                         <hr className="mt-2" />
+
                         <p className="font-semibold text-white">Dificultad</p>
                         {isEditing ? (
-                            <input
-                                className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                                name="difficulty"
-                                value={formValues.difficulty}
-                                onChange={handleChange}
-                            />
+                            <>
+                                <input
+                                    type="number"
+                                    className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
+                                    name="difficulty"
+                                    value={formValues.difficulty}
+                                    onChange={handleChange}
+                                />
+                                {errors.difficulty && <p className="text-red-500">{errors.difficulty}</p>}
+                            </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.difficulty}</p>
                         )}
 
                         <hr className="mt-2" />
+
                         <p className="font-semibold text-white">Ejercicios</p>
                         <div className="flex flex-wrap gap-8 justify-center">
                             {ExercisesRoutine.map((exercise) => (
@@ -243,6 +297,7 @@ const RutinesView = (props) => {
                                 />
                             ))}
                         </div>
+                        {errors.exercices && <p className="text-red-500">{errors.exercices}</p>}
                         {isEditing && (
                             <>
                                 <h3 className="text-xl text-white font-semibold mb-4">Agregar ejercicios</h3>
