@@ -221,7 +221,7 @@ const RutineForm = () => {
         <hr className="mb-2 mt-8" />
 
         <div className="mb-4">
-          <h3 className="text-xl font-semibold mb-2" ref={exercisesErrorRef}>Ejercicios agregados</h3>
+          <h3 className="text-xl text-white font-semibold mb-2" ref={exercisesErrorRef}>Ejercicios agregados</h3>
           {errors.ExercisesNewRoutine  && <span className="text-red-500 text-sm font-semibold" >Debes agregar al menos 3 ejercicios a la rutina</span>}
 
           <div className="flex flex-wrap gap- justify-center">
