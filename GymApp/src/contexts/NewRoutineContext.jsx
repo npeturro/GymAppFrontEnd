@@ -30,7 +30,7 @@ export const NewRoutineProvider = ({ children }) => {
     }
 
     // Add the exercise to the routine
-    toast.success('El ejercicio agregado correctamente a la rutina');
+    toast.success('Ejercicio agregado correctamente a la rutina');
     set((prevRoutine) => [...prevRoutine, exercise]);
   };
 
