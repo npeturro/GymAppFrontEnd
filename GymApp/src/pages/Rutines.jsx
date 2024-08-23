@@ -1,4 +1,4 @@
-import RutinesCard from "../sections/Rutines/RutinesCard";
+import RutinesList from "../sections/Rutines/RutinesList";
 import { useNavigate } from "react-router-dom";
 const Rutines = () => {
     const rutines = [
@@ -144,7 +144,7 @@ const Rutines = () => {
             </div>
             <div className="flex flex-col items-center justify-center min-h-screen bg-slate-100 p-6">
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">Listado de rutinas</h1>
-                <RutinesCard rutines={rutines} />
+                <RutinesList rutines={rutines} />
             </div>
         </>
     );

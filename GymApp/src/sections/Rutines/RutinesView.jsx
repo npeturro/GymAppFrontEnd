@@ -109,16 +109,15 @@ const exercises = [
         title: "Plank",
         difficulty: 1,
         category: "Core",
-        description:
-            "Engages core muscles, helps improve stability and strength.",
+        description: "Engages core muscles, helps improve stability and strength.",
         image:
             "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png",
         machine: null,
     },
 ];
 
-
 const RutinesView = () => {
+    
     const location = useLocation();
     const { state } = location;
     const navigate = useNavigate();
@@ -132,11 +131,15 @@ const RutinesView = () => {
     const validate = () => {
         const newErrors = {};
         if (!formValues.title) newErrors.title = "El nombre es obligatorio";
-        if (!formValues.category) newErrors.category = "La categoría es obligatoria";
-        if (!formValues.description) newErrors.description = "La descripción es obligatoria";
+        if (!formValues.category)
+            newErrors.category = "La categoría es obligatoria";
+        if (!formValues.description)
+            newErrors.description = "La descripción es obligatoria";
         if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
-        if (!formValues.difficulty) newErrors.difficulty = "La dificultad es obligatoria";
-        if (ExercisesRoutine.length === 0) newErrors.exercices = "Debe agregar al menos un ejercicio";
+        if (!formValues.difficulty)
+            newErrors.difficulty = "La dificultad es obligatoria";
+        if (ExercisesRoutine.length === 0)
+            newErrors.exercices = "Debe agregar al menos un ejercicio";
         return newErrors;
     };
 
@@ -172,13 +175,16 @@ const RutinesView = () => {
 
     const handleDelete = () => {
         toast.success("Rutina eliminada con éxito");
-        navigate('/rutines');
+        navigate("/rutines");
     };
 
     return (
         <>
             <div className="w-full h-full flex relative w-200 item-center justify-start">
-                <button className="fixed bottom-[50%] left-5 bg-gray-100" onClick={() => navigate('/rutines')}>
+                <button
+                    className="fixed bottom-[50%] left-5 bg-gray-100"
+                    onClick={() => navigate("/rutines")}
+                >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -210,7 +216,9 @@ const RutinesView = () => {
                                 {errors.title && <p className="text-red-500">{errors.title}</p>}
                             </>
                         ) : (
-                            <h3 className="text-lg font-bold text-orange-500 uppercase">{rutine.title}</h3>
+                            <h3 className="text-lg font-bold text-orange-500 uppercase">
+                                {rutine.title}
+                            </h3>
                         )}
                     </div>
 
@@ -225,7 +233,9 @@ const RutinesView = () => {
                                     value={formValues.category}
                                     onChange={handleChange}
                                 />
-                                {errors.category && <p className="text-red-500">{errors.category}</p>}
+                                {errors.category && (
+                                    <p className="text-red-500">{errors.category}</p>
+                                )}
                             </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.category}</p>
@@ -242,7 +252,9 @@ const RutinesView = () => {
                                     value={formValues.description}
                                     onChange={handleChange}
                                 />
-                                {errors.description && <p className="text-red-500">{errors.description}</p>}
+                                {errors.description && (
+                                    <p className="text-red-500">{errors.description}</p>
+                                )}
                             </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.description}</p>
@@ -260,7 +272,9 @@ const RutinesView = () => {
                                     value={formValues.duration}
                                     onChange={handleChange}
                                 />
-                                {errors.duration && <p className="text-red-500">{errors.duration}</p>}
+                                {errors.duration && (
+                                    <p className="text-red-500">{errors.duration}</p>
+                                )}
                             </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.duration} minutos</p>
@@ -278,7 +292,9 @@ const RutinesView = () => {
                                     value={formValues.difficulty}
                                     onChange={handleChange}
                                 />
-                                {errors.difficulty && <p className="text-red-500">{errors.difficulty}</p>}
+                                {errors.difficulty && (
+                                    <p className="text-red-500">{errors.difficulty}</p>
+                                )}
                             </>
                         ) : (
                             <p className="mb-4 text-white">{rutine.difficulty}</p>
@@ -297,10 +313,14 @@ const RutinesView = () => {
                                 />
                             ))}
                         </div>
-                        {errors.exercices && <p className="text-red-500">{errors.exercices}</p>}
+                        {errors.exercices && (
+                            <p className="text-red-500">{errors.exercices}</p>
+                        )}
                         {isEditing && (
                             <>
-                                <h3 className="text-xl text-white font-semibold mb-4">Agregar ejercicios</h3>
+                                <h3 className="text-xl text-white font-semibold mb-4">
+                                    Agregar ejercicios
+                                </h3>
                                 <div className="flex flex-wrap gap-6 justify-center">
                                     {exercises.map((exercise) => (
                                         <ExerciseCard
