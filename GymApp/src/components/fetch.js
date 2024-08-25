@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = '';
+const baseURL = 'http://gymapp-api.ddns.net/api/';
 
 export const GetAll = async (consulta) => {
 
