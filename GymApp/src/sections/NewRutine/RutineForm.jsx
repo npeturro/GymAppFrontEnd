@@ -10,7 +10,7 @@ import { Alert } from "@mui/material";
 const exercises = [
   {
     id: 1,
-    title: "Leg Extension",
+    name: "Leg Extension",
     difficulty: 2,
     category: "Quadriceps",
     description:
@@ -21,7 +21,7 @@ const exercises = [
   },
   {
     id: 2,
-    title: "Squats",
+    name: "Squats",
     difficulty: 3,
     category: "Legs",
     description:
@@ -32,7 +32,7 @@ const exercises = [
   },
   {
     id: 3,
-    title: "Bench Press",
+    name: "Bench Press",
     difficulty: 3,
     category: "Chest",
     description:
@@ -43,7 +43,7 @@ const exercises = [
   },
   {
     id: 4,
-    title: "Deadlift",
+    name: "Deadlift",
     difficulty: 3,
     category: "Back",
     description:
@@ -54,7 +54,7 @@ const exercises = [
   },
   {
     id: 5,
-    title: "Bicep Curl",
+    name: "Bicep Curl",
     difficulty: 1,
     category: "Arms",
     description:
@@ -65,7 +65,7 @@ const exercises = [
   },
   {
     id: 6,
-    title: "Tricep Dips",
+    name: "Tricep Dips",
     difficulty: 2,
     category: "Arms",
     description:
@@ -76,7 +76,7 @@ const exercises = [
   },
   {
     id: 7,
-    title: "Pull-Ups",
+    name: "Pull-Ups",
     difficulty: 3,
     category: "Back",
     description:
@@ -87,7 +87,7 @@ const exercises = [
   },
   {
     id: 8,
-    title: "Lunges",
+    name: "Lunges",
     difficulty: 2,
     category: "Legs",
     description:
@@ -98,7 +98,7 @@ const exercises = [
   },
   {
     id: 9,
-    title: "Shoulder Press",
+    name: "Shoulder Press",
     difficulty: 2,
     category: "Shoulders",
     description:
@@ -109,7 +109,7 @@ const exercises = [
   },
   {
     id: 10,
-    title: "Plank",
+    name: "Plank",
     difficulty: 1,
     category: "Core",
     description:
@@ -156,16 +156,17 @@ const RutineForm = () => {
     }
 
     try {
-      const response = await axios.post('/api/add-routine', {
-        Nombre: data.RoutineName,
-        Descripcion: data.RoutineDescription,
-        exercises: ExercisesNewRoutine.map(e => (
+      const response = await axios.post('http://gymapp-api.ddns.net/api/Routine', {
+        name: data.RoutineName,
+        description: data.RoutineDescription,
+        exerciseList: ExercisesNewRoutine.map(e => (
           {
-            ID: e.id,
-            Series: e.series
+            idExercise: e.id,
+            set: e.series
           }
         )),
       })
+      console.log(response)
       console.log('Respuesta del servidor:', response.data);
     } catch (error) {
       toast.error('Error al querer agregar la nueva rutina')

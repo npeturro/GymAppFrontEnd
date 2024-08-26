@@ -6,7 +6,7 @@ const RutinesCard = ({ rutine, handleView }) => {
       <div className="p-3">
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-bold text-orange-500 uppercase">
-            {rutine.title}
+            {rutine.name}
           </h3>
           <div className="flex items-center">
             <svg
@@ -65,7 +65,6 @@ const RutinesCard = ({ rutine, handleView }) => {
         <div className="my-3 border-b border-yellow-400 border-[1px]"></div>
 
         <p className="text-gray-300">Dificultad: {rutine.difficulty}</p>
-        <p className="text-gray-300">Categoria: {rutine.category}</p>
         <p className="text-gray-300">Duración: {rutine.duration} min</p>
       </div>
     </div>

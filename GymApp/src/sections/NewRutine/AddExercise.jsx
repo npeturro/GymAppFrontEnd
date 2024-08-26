@@ -20,7 +20,7 @@ const AddExercise = ({ exercise, setNewRoutine, view = true }) => {
 
   return (
     <div className="relative h-[200px] w-[160px]">
-      <img src={exercise.image} alt="" className="h-full w-full object-cover" />
+      <img src={exercise.imageUrl} alt="" className="h-full w-full object-cover" />
       <div className="absolute inset-0 flex flex-col items-center bg-black/50 opacity-0 transition-opacity duration-300 hover:opacity-100">
         {
           view && (
@@ -46,9 +46,9 @@ const AddExercise = ({ exercise, setNewRoutine, view = true }) => {
           )
         }
 
-        <h4 className="font-bold text-white">{exercise.title}</h4>
+        <h4 className="font-bold text-white">{exercise.name}</h4>
         <p className="font-semibold text-yellow-400">
-          SERIES: {exercise.series}
+          SERIES: {exercise.set}
         </p>
         <div className="mt-4 flex gap-3">
           <StyledRating

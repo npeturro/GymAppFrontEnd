@@ -1,123 +1,136 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseCard from "../NewRutine/ExerciseCard";
 import { toast } from "sonner";
 import AddExercise from "../NewRutine/AddExercise";
+import { duration } from "@mui/material";
+import { GetAll } from "../../components/fetch";
 
-const exercises = [
-    {
-        id: 1,
-        title: "Leg Extension",
-        difficulty: 2,
-        category: "Quadriceps",
-        description:
-            "Strengthens quadriceps muscles, improves knee stability and flexibility.",
-        image:
-            "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
-        machine: "Leg Extension Machine",
-    },
-    {
-        id: 2,
-        title: "Squats",
-        difficulty: 3,
-        category: "Legs",
-        description:
-            "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
-        image:
-            "https://www.dir.cat/blog/wp-content/uploads/2019/05/video-tutorial-air-squat.jpg",
-        machine: null,
-    },
-    {
-        id: 3,
-        title: "Bench Press",
-        difficulty: 3,
-        category: "Chest",
-        description:
-            "Builds chest strength and mass, also engages triceps and shoulders.",
-        image:
-            "https://blogscdn.thehut.net/app/uploads/sites/478/2021/06/shutterstock_336330497opt_hero_1624870682.jpg",
-        machine: "Bench Press Machine",
-    },
-    {
-        id: 4,
-        title: "Deadlift",
-        difficulty: 3,
-        category: "Back",
-        description:
-            "Strengthens back, glutes, hamstrings, and core. Enhances overall power.",
-        image:
-            "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2023/04/Beginner-Deadlift-Workout.jpg?fit=1894%2C1337&ssl=1",
-        machine: null,
-    },
-    {
-        id: 5,
-        title: "Bicep Curl",
-        difficulty: 1,
-        category: "Arms",
-        description:
-            "Isolates and strengthens biceps. Can be done with dumbbells or a barbell.",
-        image:
-            "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2018/01/Barbell-Biceps-Curl-Bodybuilder-1109.jpg?quality=86&strip=all",
-        machine: "Bicep Curl Machine",
-    },
-    {
-        id: 6,
-        title: "Tricep Dips",
-        difficulty: 2,
-        category: "Arms",
-        description:
-            "Targets triceps and shoulders, can be performed on parallel bars or a bench.",
-        image:
-            "https://www.220triathlon.com/wp-content/uploads/sites/4/2020/05/10529-27bf444.jpg?w=700",
-        machine: "Parallel Bars",
-    },
-    {
-        id: 7,
-        title: "Pull-Ups",
-        difficulty: 3,
-        category: "Back",
-        description:
-            "Strengthens upper back, shoulders, and arms. Requires bodyweight pulling strength.",
-        image:
-            "https://ironbullstrength.com/cdn/shop/articles/how-to-do-pull-ups-for-a-bigger-and-shredded-back.webp?v=1692300888",
-        machine: null,
-    },
-    {
-        id: 8,
-        title: "Lunges",
-        difficulty: 2,
-        category: "Legs",
-        description:
-            "Works quads, hamstrings, glutes, and improves balance and stability.",
-        image:
-            "https://hips.hearstapps.com/hmg-prod/images/muscular-man-training-his-legs-doing-lunges-with-royalty-free-image-1677586874.jpg",
-        machine: null,
-    },
-    {
-        id: 9,
-        title: "Shoulder Press",
-        difficulty: 2,
-        category: "Shoulders",
-        description:
-            "Builds shoulder strength and mass, can be done with dumbbells or a barbell.",
-        image:
-            "https://barbend.com/wp-content/uploads/2023/04/Barbend.com-A-person-doing-a-shoulder-press.jpg",
-        machine: "Shoulder Press Machine",
-    },
-    {
-        id: 10,
-        title: "Plank",
-        difficulty: 1,
-        category: "Core",
-        description: "Engages core muscles, helps improve stability and strength.",
-        image:
-            "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png",
-        machine: null,
-    },
-];
+// const exercises = [
+//     {
+//         id: 1,
+//         name: "Leg Extension",
+//         difficulty: 2,
+//         category: "Quadriceps",
+//         description:
+//             "Strengthens quadriceps muscles, improves knee stability and flexibility.",
+//         image:
+//             "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
+//         machine: "Leg Extension Machine",
+//     },
+//     {
+//         id: 2,
+//         name: "Squats",
+//         difficulty: 3,
+//         category: "Legs",
+//         description:
+//             "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
+//         image:
+//             "https://www.dir.cat/blog/wp-content/uploads/2019/05/video-tutorial-air-squat.jpg",
+//         machine: null,
+//     },
+//     {
+//         id: 3,
+//         name: "Bench Press",
+//         difficulty: 3,
+//         category: "Chest",
+//         description:
+//             "Builds chest strength and mass, also engages triceps and shoulders.",
+//         image:
+//             "https://blogscdn.thehut.net/app/uploads/sites/478/2021/06/shutterstock_336330497opt_hero_1624870682.jpg",
+//         machine: "Bench Press Machine",
+//     },
+//     {
+//         id: 4,
+//         name: "Deadlift",
+//         difficulty: 3,
+//         category: "Back",
+//         description:
+//             "Strengthens back, glutes, hamstrings, and core. Enhances overall power.",
+//         image:
+//             "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2023/04/Beginner-Deadlift-Workout.jpg?fit=1894%2C1337&ssl=1",
+//         machine: null,
+//     },
+//     {
+//         id: 5,
+//         name: "Bicep Curl",
+//         difficulty: 1,
+//         category: "Arms",
+//         description:
+//             "Isolates and strengthens biceps. Can be done with dumbbells or a barbell.",
+//         image:
+//             "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2018/01/Barbell-Biceps-Curl-Bodybuilder-1109.jpg?quality=86&strip=all",
+//         machine: "Bicep Curl Machine",
+//     },
+//     {
+//         id: 6,
+//         name: "Tricep Dips",
+//         difficulty: 2,
+//         category: "Arms",
+//         description:
+//             "Targets triceps and shoulders, can be performed on parallel bars or a bench.",
+//         image:
+//             "https://www.220triathlon.com/wp-content/uploads/sites/4/2020/05/10529-27bf444.jpg?w=700",
+//         machine: "Parallel Bars",
+//     },
+//     {
+//         id: 7,
+//         name: "Pull-Ups",
+//         difficulty: 3,
+//         category: "Back",
+//         description:
+//             "Strengthens upper back, shoulders, and arms. Requires bodyweight pulling strength.",
+//         image:
+//             "https://ironbullstrength.com/cdn/shop/articles/how-to-do-pull-ups-for-a-bigger-and-shredded-back.webp?v=1692300888",
+//         machine: null,
+//     },
+//     {
+//         id: 8,
+//         name: "Lunges",
+//         difficulty: 2,
+//         category: "Legs",
+//         description:
+//             "Works quads, hamstrings, glutes, and improves balance and stability.",
+//         image:
+//             "https://hips.hearstapps.com/hmg-prod/images/muscular-man-training-his-legs-doing-lunges-with-royalty-free-image-1677586874.jpg",
+//         machine: null,
+//     },
+//     {
+//         id: 9,
+//         name: "Shoulder Press",
+//         difficulty: 2,
+//         category: "Shoulders",
+//         description:
+//             "Builds shoulder strength and mass, can be done with dumbbells or a barbell.",
+//         image:
+//             "https://barbend.com/wp-content/uploads/2023/04/Barbend.com-A-person-doing-a-shoulder-press.jpg",
+//         machine: "Shoulder Press Machine",
+//     },
+//     {
+//         id: 10,
+//         name: "Plank",
+//         difficulty: 1,
+//         category: "Core",
+//         description: "Engages core muscles, helps improve stability and strength.",
+//         image:
+//             "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png",
+//         machine: null,
+//     },
+// ];
 
 const RutinesView = () => {
-    
+
+
+    const [exercises, setExercises] = useState([])
+
+    useEffect(() => {
+        const fetchDatos = async () => {
+            const datos = await GetAll("Exercise");
+            setExercises(datos || "");
+        }
+        fetchDatos();
+    }, [])
+
     const location = useLocation();
     const { state } = location;
     const navigate = useNavigate();
@@ -126,20 +139,43 @@ const RutinesView = () => {
     const [formValues, setFormValues] = useState(state.rutine);
     const [errors, setErrors] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const [ExercisesRoutine, setNewRoutine] = useState(rutine.exercices);
+    const [ExercisesRoutine, setNewRoutine] = useState(rutine.setExercises);
+    const [filterExercise, setFilterExercise] = useState([]);
+
+    useEffect(() => {
+        // Filtra los ejercicios basados en ExercisesRoutine
+        const updatedFilterExercises = exercises
+            .map((exercise) => {
+                // Encuentra el ejercicio correspondiente en ExercisesRoutine
+                const routineExercise = ExercisesRoutine.find((e) => e.idExercise === exercise.id);
+
+                if (routineExercise) {
+                    // Devuelve el ejercicio con el set correspondiente
+                    return {
+                        ...exercise,
+                        set: routineExercise.set
+                    };
+                }
+                return null;
+            })
+            .filter((exercise) => exercise !== null); // Elimina los ejercicios que no coinciden
+
+        // Actualiza el estado con los ejercicios y el set correspondiente
+        setFilterExercise(updatedFilterExercises);
+    }, [ExercisesRoutine, exercises]); // Ejecutar el efecto cuando ExercisesRoutine o exercises cambian
+
+    console.log(filterExercise);
 
     const validate = () => {
         const newErrors = {};
-        if (!formValues.title) newErrors.title = "El nombre es obligatorio";
-        if (!formValues.category)
-            newErrors.category = "La categoría es obligatoria";
+        if (!formValues.name) newErrors.name = "El nombre es obligatorio";
         if (!formValues.description)
             newErrors.description = "La descripción es obligatoria";
         if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
         if (!formValues.difficulty)
             newErrors.difficulty = "La dificultad es obligatoria";
         if (ExercisesRoutine.length === 0)
-            newErrors.exercices = "Debe agregar al menos un ejercicio";
+            newErrors.setExercises = "Debe agregar al menos un ejercicio";
         return newErrors;
     };
 
@@ -151,24 +187,48 @@ const RutinesView = () => {
         });
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const validationErrors = validate();
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
             const updatedRutine = {
                 ...formValues,
-                exercices: ExercisesRoutine,
+                setExercises: ExercisesRoutine,
             };
             setRutine(updatedRutine);
             setIsEditing(false);
-            toast.success("Rutina guardada con éxito");
+            // try {
+            //     const response = await axios.put(`http://gymapp-api.ddns.net/api/Routine/${updatedRutine.id}`, {
+            //         name: updatedRutine.name,
+            //         description: updatedRutine.description,
+            //         duration: 0,
+            //         difficulty: 0,
+            //         setExercises: ExercisesRoutine.map(e => (
+            //             {
+            //                 id: e.id,
+            //                 idRoutine: updatedRutine.id,
+            //                 idExercise: e.id,
+            //                 set: e.set
+            //             }
+            //         )),
+            //     })
+            //     console.log(response)
+            //     console.log('Respuesta del servidor:', response.data);
+            //     setRutine(updatedRutine);
+            //     setIsEditing(false);
+            //     toast.success("Rutina guardada con éxito");
+            // } catch (error) {
+            //     toast.error('Error al querer agregar la nueva rutina')
+            //     console.error('Error al enviar los datos:', error);
+            // }
         }
+
     };
 
     const handleCancel = () => {
         setFormValues(rutine);
-        setNewRoutine(rutine.exercices);
+        setNewRoutine(rutine.setExercises);
         setIsEditing(false);
         setErrors({});
     };
@@ -209,37 +269,20 @@ const RutinesView = () => {
                             <>
                                 <input
                                     className="text-lg font-bold text-orange-500 uppercase bg-transparent border-b-2 border-orange-500 focus:outline-none"
-                                    name="title"
-                                    value={formValues.title}
+                                    name="name"
+                                    value={formValues.name}
                                     onChange={handleChange}
                                 />
-                                {errors.title && <p className="text-red-500">{errors.title}</p>}
+                                {errors.name && <p className="text-red-500">{errors.name}</p>}
                             </>
                         ) : (
                             <h3 className="text-lg font-bold text-orange-500 uppercase">
-                                {rutine.title}
+                                {rutine.name}
                             </h3>
                         )}
                     </div>
 
                     <div className="flex-grow p-6 text-white">
-                        <p className="font-semibold">Categoría</p>
-                        {isEditing ? (
-                            <>
-                                <input
-                                    type="text"
-                                    className="mb-4 p-2 text-black w-full border-2 border-gray-300 rounded"
-                                    name="category"
-                                    value={formValues.category}
-                                    onChange={handleChange}
-                                />
-                                {errors.category && (
-                                    <p className="text-red-500">{errors.category}</p>
-                                )}
-                            </>
-                        ) : (
-                            <p className="mb-4 text-white">{rutine.category}</p>
-                        )}
 
                         <hr className="mt-2" />
 
@@ -304,7 +347,7 @@ const RutinesView = () => {
 
                         <p className="font-semibold text-white">Ejercicios</p>
                         <div className="flex flex-wrap gap-8 justify-center">
-                            {ExercisesRoutine.map((exercise) => (
+                            {filterExercise.map((exercise) => (
                                 <AddExercise
                                     key={exercise.id}
                                     exercise={exercise}
@@ -313,8 +356,8 @@ const RutinesView = () => {
                                 />
                             ))}
                         </div>
-                        {errors.exercices && (
-                            <p className="text-red-500">{errors.exercices}</p>
+                        {errors.setExercises && (
+                            <p className="text-red-500">{errors.setExercises}</p>
                         )}
                         {isEditing && (
                             <>

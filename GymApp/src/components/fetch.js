@@ -16,11 +16,11 @@ export const GetAll = async (consulta) => {
 export const AddRutina = async (values) => {
     try {
         const newRutine = {
-            title: values.title,
-            category: values.title,
-            description: values.title,
+            name: values.name,
+            category: values.name,
+            description: values.name,
             duration: values.duration,
-            exercices: [
+            setExercises: [
                 {
                     id: 3,
                     set: 2

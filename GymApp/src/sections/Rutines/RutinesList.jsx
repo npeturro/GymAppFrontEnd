@@ -14,7 +14,7 @@ const RutinesList = ({ rutines }) => {
     const [searchRutine, setSearchRutine] = useState("");
 
     const filteredRutine = rutines.filter((rutine) =>
-        rutine.title.toLowerCase().includes(searchRutine.toLowerCase())
+        rutine.name.toLowerCase().includes(searchRutine.toLowerCase())
     );
 
     const handleSearch = (e) => {

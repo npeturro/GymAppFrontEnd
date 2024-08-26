@@ -1,18 +1,20 @@
+import { useEffect, useState } from "react";
 import RutinesList from "../sections/Rutines/RutinesList";
 import { useNavigate } from "react-router-dom";
+import { GetAll } from "../components/fetch";
 const Rutines = () => {
+
     const rutines = [
         {
             id: 1,
-            title: "Biceps",
+            name: "Biceps",
             difficulty: 3,
-            category: "Legs",
             description: "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
             duration: "50",
-            exercices: [
+            setExercises: [
                 {
                     id: 1,
-                    title: "Leg Extension",
+                    name: "Leg Extension",
                     difficulty: 2,
                     category: "Quadriceps",
                     description:
@@ -23,7 +25,7 @@ const Rutines = () => {
                 },
                 {
                     id: 2,
-                    title: "Squats",
+                    name: "Squats",
                     difficulty: 3,
                     category: "Legs",
                     description:
@@ -36,15 +38,14 @@ const Rutines = () => {
         },
         {
             id: 2,
-            title: "Chest Workout",
+            name: "Chest Workout",
             difficulty: 4,
-            category: "Upper Body",
             description: "Focuses on the chest muscles. Builds strength and muscle mass in the upper body.",
             duration: "45",
-            exercices: [
+            setExercises: [
                 {
                     id: 3,
-                    title: "Bench Press",
+                    name: "Bench Press",
                     difficulty: 3,
                     category: "Chest",
                     description:
@@ -55,7 +56,7 @@ const Rutines = () => {
                 },
                 {
                     id: 4,
-                    title: "Deadlift",
+                    name: "Deadlift",
                     difficulty: 3,
                     category: "Back",
                     description:
@@ -68,15 +69,14 @@ const Rutines = () => {
         },
         {
             id: 3,
-            title: "Back Workout",
+            name: "Back Workout",
             difficulty: 4,
-            category: "Upper Body",
             description: "Strengthens the back muscles. Improves posture and overall back strength.",
             duration: "50",
-            exercices: [
+            setExercises: [
                 {
                     id: 5,
-                    title: "Bicep Curl",
+                    name: "Bicep Curl",
                     difficulty: 1,
                     category: "Arms",
                     description:
@@ -87,7 +87,7 @@ const Rutines = () => {
                 },
                 {
                     id: 6,
-                    title: "Tricep Dips",
+                    name: "Tricep Dips",
                     difficulty: 2,
                     category: "Arms",
                     description:
@@ -98,7 +98,7 @@ const Rutines = () => {
                 },
                 {
                     id: 7,
-                    title: "Pull-Ups",
+                    name: "Pull-Ups",
                     difficulty: 3,
                     category: "Back",
                     description:
@@ -111,22 +111,21 @@ const Rutines = () => {
         },
         {
             id: 4,
-            title: "Core Workout",
+            name: "Core Workout",
             difficulty: 3,
-            category: "Core",
             description: "Engages the core muscles. Improves core strength and stability.",
             duration: "30",
-            exercices: [
+            setExercises: [
                 {
                     id: 1,
-                    title: "Planks",
+                    name: "Planks",
                     difficulty: 2,
                     category: "Core",
                     description: "Strengthens the entire core. Improves stability and endurance.",
                 },
                 {
                     id: 2,
-                    title: "Russian Twists",
+                    name: "Russian Twists",
                     difficulty: 3,
                     category: "Core",
                     description: "Targets the obliques and improves rotational strength.",
@@ -134,6 +133,17 @@ const Rutines = () => {
             ],
         },
     ];
+
+    const [routine, setRoutine] = useState([])
+
+    useEffect(()=> {
+        const fetchDatos = async () => {
+            const datos = await GetAll("Routine");
+            setRoutine(datos || "");
+        }
+        fetchDatos();
+    }, [])
+
 
     const navigate = useNavigate()
 
@@ -144,7 +154,7 @@ const Rutines = () => {
             </div>
             <div className="flex flex-col items-center justify-center min-h-screen bg-slate-100 p-6">
                 <h1 className="text-4xl font-bold text-gray-800 mb-4">Listado de rutinas</h1>
-                <RutinesList rutines={rutines} />
+                <RutinesList rutines={routine} />
             </div>
         </>
     );

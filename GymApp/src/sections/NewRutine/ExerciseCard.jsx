@@ -65,19 +65,19 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
 
       <div className="p-2">
         <h3 className="text-sm font-bold text-[#F97316] uppercase">
-          {exercise.title}
+          {exercise.name}
         </h3>
         <HtmlTooltip
-          title={
+          name={
             <React.Fragment>
               <h4 className="font-bold uppercase text-[10px]">
-                {exercise.title}
+                {exercise.name}
               </h4>
               <p className="text-[10px]">{exercise.description}</p>
             </React.Fragment>
           }>
           <img
-            src={exercise.image}
+            src={exercise.imageUrl}
             alt=""
             className="h-[75px] w-full object-cover rounded-md my-1 cursor-help"
           />
