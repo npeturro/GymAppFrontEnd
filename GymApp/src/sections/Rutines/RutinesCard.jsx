@@ -16,9 +16,9 @@ const RutinesCard = ({ rutine, handleView }) => {
               version="1.1"
               id="Layer_1"
               xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
               viewBox="0 0 503.607 503.607"
-              xml:space="preserve">
+              xmlSpace="preserve">
               <g transform="translate(1 1)">
                 <g>
                   <g stroke="#f97316" strokeWidth="10">

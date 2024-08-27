@@ -33,7 +33,7 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
 
   const handleAddExercise = (e) => {
     e.preventDefault();
-    addExerciseToNewRoutine({ ...exercise, series: Series }, ExercisesNewRoutine, setNewRoutine);
+    addExerciseToNewRoutine({ ...exercise, set: Series }, ExercisesNewRoutine, setNewRoutine);
   };
 
   return (

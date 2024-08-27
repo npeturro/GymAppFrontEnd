@@ -3,123 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseCard from "../NewRutine/ExerciseCard";
 import { toast } from "sonner";
 import AddExercise from "../NewRutine/AddExercise";
-import { duration } from "@mui/material";
 import { GetAll } from "../../components/fetch";
-
-// const exercises = [
-//     {
-//         id: 1,
-//         name: "Leg Extension",
-//         difficulty: 2,
-//         category: "Quadriceps",
-//         description:
-//             "Strengthens quadriceps muscles, improves knee stability and flexibility.",
-//         image:
-//             "https://hips.hearstapps.com/hmg-prod/images/strong-young-man-doing-legs-exercise-in-the-gym-royalty-free-image-517308282-1560456961.jpg",
-//         machine: "Leg Extension Machine",
-//     },
-//     {
-//         id: 2,
-//         name: "Squats",
-//         difficulty: 3,
-//         category: "Legs",
-//         description:
-//             "Targets quads, hamstrings, glutes, and core. Improves strength and stability.",
-//         image:
-//             "https://www.dir.cat/blog/wp-content/uploads/2019/05/video-tutorial-air-squat.jpg",
-//         machine: null,
-//     },
-//     {
-//         id: 3,
-//         name: "Bench Press",
-//         difficulty: 3,
-//         category: "Chest",
-//         description:
-//             "Builds chest strength and mass, also engages triceps and shoulders.",
-//         image:
-//             "https://blogscdn.thehut.net/app/uploads/sites/478/2021/06/shutterstock_336330497opt_hero_1624870682.jpg",
-//         machine: "Bench Press Machine",
-//     },
-//     {
-//         id: 4,
-//         name: "Deadlift",
-//         difficulty: 3,
-//         category: "Back",
-//         description:
-//             "Strengthens back, glutes, hamstrings, and core. Enhances overall power.",
-//         image:
-//             "https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2023/04/Beginner-Deadlift-Workout.jpg?fit=1894%2C1337&ssl=1",
-//         machine: null,
-//     },
-//     {
-//         id: 5,
-//         name: "Bicep Curl",
-//         difficulty: 1,
-//         category: "Arms",
-//         description:
-//             "Isolates and strengthens biceps. Can be done with dumbbells or a barbell.",
-//         image:
-//             "https://i0.wp.com/www.muscleandfitness.com/wp-content/uploads/2018/01/Barbell-Biceps-Curl-Bodybuilder-1109.jpg?quality=86&strip=all",
-//         machine: "Bicep Curl Machine",
-//     },
-//     {
-//         id: 6,
-//         name: "Tricep Dips",
-//         difficulty: 2,
-//         category: "Arms",
-//         description:
-//             "Targets triceps and shoulders, can be performed on parallel bars or a bench.",
-//         image:
-//             "https://www.220triathlon.com/wp-content/uploads/sites/4/2020/05/10529-27bf444.jpg?w=700",
-//         machine: "Parallel Bars",
-//     },
-//     {
-//         id: 7,
-//         name: "Pull-Ups",
-//         difficulty: 3,
-//         category: "Back",
-//         description:
-//             "Strengthens upper back, shoulders, and arms. Requires bodyweight pulling strength.",
-//         image:
-//             "https://ironbullstrength.com/cdn/shop/articles/how-to-do-pull-ups-for-a-bigger-and-shredded-back.webp?v=1692300888",
-//         machine: null,
-//     },
-//     {
-//         id: 8,
-//         name: "Lunges",
-//         difficulty: 2,
-//         category: "Legs",
-//         description:
-//             "Works quads, hamstrings, glutes, and improves balance and stability.",
-//         image:
-//             "https://hips.hearstapps.com/hmg-prod/images/muscular-man-training-his-legs-doing-lunges-with-royalty-free-image-1677586874.jpg",
-//         machine: null,
-//     },
-//     {
-//         id: 9,
-//         name: "Shoulder Press",
-//         difficulty: 2,
-//         category: "Shoulders",
-//         description:
-//             "Builds shoulder strength and mass, can be done with dumbbells or a barbell.",
-//         image:
-//             "https://barbend.com/wp-content/uploads/2023/04/Barbend.com-A-person-doing-a-shoulder-press.jpg",
-//         machine: "Shoulder Press Machine",
-//     },
-//     {
-//         id: 10,
-//         name: "Plank",
-//         difficulty: 1,
-//         category: "Core",
-//         description: "Engages core muscles, helps improve stability and strength.",
-//         image:
-//             "https://hips.hearstapps.com/hmg-prod/images/hdm119918mh15842-1545237096.png",
-//         machine: null,
-//     },
-// ];
+import { useNewRoutine } from "../../contexts/NewRoutineContext";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
 
 const RutinesView = () => {
 
+    const { removeExerciseToNewRoutine } = useNewRoutine();
 
     const [exercises, setExercises] = useState([])
 
@@ -139,8 +30,20 @@ const RutinesView = () => {
     const [formValues, setFormValues] = useState(state.rutine);
     const [errors, setErrors] = useState({});
     const [isEditing, setIsEditing] = useState(false);
-    const [ExercisesRoutine, setNewRoutine] = useState(rutine.setExercises);
+    const [ExercisesRoutine, setNewRoutine] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [filterExercise, setFilterExercise] = useState([]);
+
+    useEffect(() => {
+        const fetchRoutineExercises = async () => {
+          setIsLoading(true);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          setNewRoutine(rutine.setExercises);
+          setIsLoading(false);
+        };
+      
+        fetchRoutineExercises();
+      }, []);
 
     useEffect(() => {
         // Filtra los ejercicios basados en ExercisesRoutine
@@ -164,7 +67,6 @@ const RutinesView = () => {
         setFilterExercise(updatedFilterExercises);
     }, [ExercisesRoutine, exercises]); // Ejecutar el efecto cuando ExercisesRoutine o exercises cambian
 
-    console.log(filterExercise);
 
     const validate = () => {
         const newErrors = {};
@@ -198,30 +100,33 @@ const RutinesView = () => {
             };
             setRutine(updatedRutine);
             setIsEditing(false);
-            // try {
-            //     const response = await axios.put(`http://gymapp-api.ddns.net/api/Routine/${updatedRutine.id}`, {
-            //         name: updatedRutine.name,
-            //         description: updatedRutine.description,
-            //         duration: 0,
-            //         difficulty: 0,
-            //         setExercises: ExercisesRoutine.map(e => (
-            //             {
-            //                 id: e.id,
-            //                 idRoutine: updatedRutine.id,
-            //                 idExercise: e.id,
-            //                 set: e.set
-            //             }
-            //         )),
-            //     })
-            //     console.log(response)
-            //     console.log('Respuesta del servidor:', response.data);
-            //     setRutine(updatedRutine);
-            //     setIsEditing(false);
-            //     toast.success("Rutina guardada con éxito");
-            // } catch (error) {
-            //     toast.error('Error al querer agregar la nueva rutina')
-            //     console.error('Error al enviar los datos:', error);
-            // }
+            
+            const datosPut = {
+                id: updatedRutine.id,
+                name: updatedRutine.name,
+                description: updatedRutine.description,
+                duration: 0,
+                difficulty: 0,
+                setExercises: filterExercise.map(e => (
+                    {
+                        id: e.id,
+                        idRoutine: updatedRutine.id,
+                        idExercise: e.id,
+                        set: e.set
+                    }
+                )),
+            }
+            
+            try {
+                const response = await axios.put(`http://gymapp-api.ddns.net/api/Routine/${updatedRutine.id}`, datosPut)
+                console.log('Respuesta del servidor:', response.data);
+                setRutine(updatedRutine);
+                setIsEditing(false);
+                toast.success("Rutina guardada con éxito");
+            } catch (error) {
+                toast.error('Error al querer agregar la nueva rutina')
+                console.error('Error al enviar los datos:', error);
+            }
         }
 
     };
@@ -346,13 +251,13 @@ const RutinesView = () => {
                         <hr className="mt-2" />
 
                         <p className="font-semibold text-white">Ejercicios</p>
-                        <div className="flex flex-wrap gap-8 justify-center">
-                            {filterExercise.map((exercise) => (
+                        <div className="flex flex-wrap justify-center">
+                            {isLoading ? <CircularProgress color="inherit" /> : filterExercise.map((exercise) => (
                                 <AddExercise
                                     key={exercise.id}
                                     exercise={exercise}
-                                    setNewRoutine={setNewRoutine}
-                                    view={isEditing ? true : false}
+                                    setNewRoutine={setFilterExercise}
+                                    view={isEditing}
                                 />
                             ))}
                         </div>
@@ -369,7 +274,7 @@ const RutinesView = () => {
                                         <ExerciseCard
                                             key={exercise.id}
                                             exercise={exercise}
-                                            setNewRoutine={setNewRoutine}
+                                            setNewRoutine={setFilterExercise}
                                             ExercisesNewRoutine={ExercisesRoutine}
                                         />
                                     ))}
