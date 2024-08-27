@@ -105,17 +105,6 @@ const RutinesCard = ({ rutine, handleView }) => {
           </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </div>
   );
