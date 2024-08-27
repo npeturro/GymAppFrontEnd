@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 
-const RutinesCard = ({ rutine, handleView }) => {
+const RutinesCard = ({ rutine, handleView, hasMachineExercise }) => {
+
+  console.log(rutine)
+
   return (
     <div className="w-full max-w-3xl mb-4 bg-slate-700 rounded-xl shadow-lg shadow-slate-950 overflow-hidden text-white flex flex-col">
       <div className="p-3">
@@ -9,21 +12,23 @@ const RutinesCard = ({ rutine, handleView }) => {
             {rutine.name}
           </h3>
           <div className="flex items-center">
-            <svg
-              fill="#f97316"
-              height="30px"
-              width="30px"
-              version="1.1"
-              id="Layer_1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              viewBox="0 0 503.607 503.607"
-              xmlSpace="preserve">
-              <g transform="translate(1 1)">
-                <g>
-                  <g stroke="#f97316" strokeWidth="10">
-                    <path
-                      d="M473.229,53.557c-5.043,0-9.833,1.346-14.028,3.687c-3.865-11.742-15.081-20.474-27.939-20.474
+            {
+              hasMachineExercise && (
+                <svg
+                  fill="#f97316"
+                  height="30px"
+                  width="30px"
+                  version="1.1"
+                  id="Layer_1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlnsXlink="http://www.w3.org/1999/xlink"
+                  viewBox="0 0 503.607 503.607"
+                  xmlSpace="preserve">
+                  <g transform="translate(1 1)">
+                    <g>
+                      <g stroke="#f97316" strokeWidth="10">
+                        <path
+                          d="M473.229,53.557c-5.043,0-9.833,1.346-14.028,3.687c-3.865-11.742-15.081-20.474-27.939-20.474
                                 c-15.948,0-29.377,13.43-29.377,29.377v12.59H99.721v-12.59c0-15.948-13.43-29.377-29.377-29.377
                                 c-12.858,0-24.074,8.733-27.939,20.474c-4.195-2.341-8.984-3.687-14.028-3.687C12.429,53.557-1,66.987-1,82.934v41.967
                                 c0,15.948,13.43,29.377,29.377,29.377c5.043,0,9.833-1.346,14.028-3.687c3.865,11.742,15.081,20.474,27.939,20.474
@@ -41,19 +46,20 @@ const RutinesCard = ({ rutine, handleView }) => {
                                 V66.148c0-6.715,5.875-12.59,12.59-12.59c6.715,0,12.59,5.875,12.59,12.59v16.787v41.967V141.689z M485.82,124.902
                                 c0,6.715-5.875,12.59-12.59,12.59c-6.715,0-12.59-5.875-12.59-12.59V82.934c0-6.715,5.875-12.59,12.59-12.59
                                 c6.715,0,12.59,5.875,12.59,12.59V124.902z"
-                    />
-                    <path
-                      d="M309.557,288.574H192.049c-14.269,0-25.18,10.911-25.18,25.18c0,11.302,6.849,20.492,16.787,23.827v118.862
+                        />
+                        <path
+                          d="M309.557,288.574H192.049c-14.269,0-25.18,10.911-25.18,25.18c0,11.302,6.849,20.492,16.787,23.827v118.862
                                 c0,5.036,3.357,8.393,8.393,8.393s8.393-3.357,8.393-8.393V338.934h100.721v117.508c0,5.036,3.357,8.393,8.393,8.393
                                 c4.197,0,8.393-3.357,8.393-8.393V337.472c9.578-3.427,16.787-12.542,16.787-23.718
                                 C334.738,299.485,323.826,288.574,309.557,288.574z M309.557,322.147H192.049c-5.036,0-8.393-3.357-8.393-8.393
                                 s3.357-8.393,8.393-8.393h117.508c5.036,0,8.393,3.357,8.393,8.393S314.593,322.147,309.557,322.147z"
-                    />
+                        />
+                      </g>
+                    </g>
                   </g>
-                </g>
-              </g>
-            </svg>
-
+                </svg>
+              )
+            }
             <button
               className="ml-4 bg-gray-800 text-white py-2 px-5 rounded-full font-semibold cursor-pointer border-none"
               onClick={() => handleView(rutine)}>

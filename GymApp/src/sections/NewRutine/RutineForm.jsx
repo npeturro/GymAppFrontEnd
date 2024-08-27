@@ -69,7 +69,7 @@ const RutineForm = () => {
           description: data.RoutineDescription,
           exerciseList: ExercisesNewRoutine.map((e) => ({
             idExercise: e.id,
-            set: e.series,
+            set: e.set,
           })),
         }
       );

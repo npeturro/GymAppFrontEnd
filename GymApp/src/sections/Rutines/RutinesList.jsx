@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RutinesModal from "./RutinesView";
 import { useNavigate } from "react-router-dom";
 import RutinesCard from "./RutinesCard";
 import PropTypes from "prop-types";
 import LinearProgress from "@mui/material/LinearProgress";
+import { GetAll } from "../../components/fetch";
 
 const RutinesList = ({ rutines, isLoading }) => {
   const [open, setOpen] = useState(false);
   const [selectedRutine, setSelectedRutine] = useState(null);
   const navigate = useNavigate();
+  const [exercises, setExercises] = useState([]);
+
+  useEffect(() => {
+    const fetchDatos = async () => {
+      const datos = await GetAll("Exercise");
+      setExercises(datos);
+    };
+    fetchDatos();
+  }, []);
 
   // Buscador
   const [searchRutine, setSearchRutine] = useState("");
@@ -28,6 +38,7 @@ const RutinesList = ({ rutines, isLoading }) => {
 
   const handleClose = () => setOpen(false);
 
+
   return (
     <>
       <div className="bg-gray-100 w-full min-h-screen flex flex-col items-center">
@@ -43,19 +54,32 @@ const RutinesList = ({ rutines, isLoading }) => {
         </div>
 
         {isLoading ? (
-           <div className="w-full max-w-3xl">
-           <LinearProgress />
-            </div>
+          <div className="w-full max-w-3xl">
+            <LinearProgress />
+          </div>
         ) : (
           <>
             {filteredRutine.length > 0 ? (
-              filteredRutine.map((rutine) => (
-                <RutinesCard
-                  key={rutine.id}
-                  rutine={rutine}
-                  handleView={handleView}
-                />
-              ))
+              filteredRutine.map((rutine) => {
+                console.log(rutine)
+                const hasMachineExercise = rutine.setExercises.some(
+                  (setExercise) => {
+                    const exercise = exercises.find(
+                      (ex) => ex.id === setExercise.idExercise
+                    );
+                    return exercise && exercise.machine !== null;
+                  }
+                );
+
+                return (
+                  <RutinesCard
+                    key={rutine.id}
+                    rutine={rutine}
+                    handleView={handleView}
+                    hasMachineExercise={hasMachineExercise}
+                  />
+                );
+              })
             ) : (
               <p className="text-center text-gray-900">
                 No hay ejercicios disponibles.

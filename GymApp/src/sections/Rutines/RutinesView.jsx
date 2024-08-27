@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ExerciseCard from "../NewRutine/ExerciseCard";
 import { toast } from "sonner";
 import AddExercise from "../NewRutine/AddExercise";
-import { GetAll } from "../../components/fetch";
+import { GetAll, Delete } from "../../components/fetch";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
@@ -70,9 +70,6 @@ const RutinesView = () => {
         if (!formValues.name) newErrors.name = "El nombre es obligatorio";
         if (!formValues.description)
             newErrors.description = "La descripción es obligatoria";
-        //if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
-        //if (!formValues.difficulty)
-            //newErrors.difficulty = "La dificultad es obligatoria";
         if (filterExercise.length < 3)
             newErrors.setExercises = "Debe agregar al menos 3 ejercicios";
         return newErrors;
@@ -120,6 +117,8 @@ const RutinesView = () => {
                 setRutine(updatedRutine);
                 setIsEditing(false);
                 toast.success("Rutina guardada con éxito");
+                setErrors({});
+                // navigate("/rutines");
             } catch (error) {
                 toast.error('Error al querer agregar la nueva rutina')
                 console.error('Error al enviar los datos:', error);
@@ -135,9 +134,17 @@ const RutinesView = () => {
         setErrors({});
     };
 
-    const handleDelete = () => {
-        toast.success("Rutina eliminada con éxito");
-        navigate("/rutines");
+    const handleDelete = async () => {
+        console.log(rutine.id)
+        // navigate("/rutines");
+        try {
+            await Delete('Routine', rutine.id);
+            toast.success("Rutina eliminada con éxito");
+            navigate("/rutines");
+        } catch (error) {
+            console.error('Error eliminando la rutina:', error);
+            toast.error('Hubo un error al eliminar la rutina. Por favor, intenta de nuevo.');
+        }
     };
 
     return (
@@ -216,6 +223,7 @@ const RutinesView = () => {
                                     name="duration"
                                     value={formValues.duration}
                                     onChange={handleChange}
+                                    disabled
                                 />
                                 {errors.duration && (
                                     <p className="text-red-500">{errors.duration}</p>
@@ -236,6 +244,7 @@ const RutinesView = () => {
                                     name="difficulty"
                                     value={formValues.difficulty}
                                     onChange={handleChange}
+                                    disabled
                                 />
                                 {errors.difficulty && (
                                     <p className="text-red-500">{errors.difficulty}</p>
@@ -258,7 +267,6 @@ const RutinesView = () => {
                                 />
                             ))}
                         </div>
-                        {/*Señor Peturro esta vvalidacion no se va cuando ya editas*/}
                         {errors.setExercises && (
                             <p className="text-red-500">{errors.setExercises}</p>
                         )}
