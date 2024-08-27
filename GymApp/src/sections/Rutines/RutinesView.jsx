@@ -4,13 +4,10 @@ import ExerciseCard from "../NewRutine/ExerciseCard";
 import { toast } from "sonner";
 import AddExercise from "../NewRutine/AddExercise";
 import { GetAll } from "../../components/fetch";
-import { useNewRoutine } from "../../contexts/NewRoutineContext";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 
 const RutinesView = () => {
-
-    const { removeExerciseToNewRoutine } = useNewRoutine();
 
     const [exercises, setExercises] = useState([])
 
@@ -73,11 +70,11 @@ const RutinesView = () => {
         if (!formValues.name) newErrors.name = "El nombre es obligatorio";
         if (!formValues.description)
             newErrors.description = "La descripción es obligatoria";
-        if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
-        if (!formValues.difficulty)
-            newErrors.difficulty = "La dificultad es obligatoria";
-        if (ExercisesRoutine.length === 0)
-            newErrors.setExercises = "Debe agregar al menos un ejercicio";
+        //if (!formValues.duration) newErrors.duration = "La duración es obligatoria";
+        //if (!formValues.difficulty)
+            //newErrors.difficulty = "La dificultad es obligatoria";
+        if (filterExercise.length < 3)
+            newErrors.setExercises = "Debe agregar al menos 3 ejercicios";
         return newErrors;
     };
 
@@ -261,6 +258,7 @@ const RutinesView = () => {
                                 />
                             ))}
                         </div>
+                        {/*Señor Peturro esta vvalidacion no se va cuando ya editas*/}
                         {errors.setExercises && (
                             <p className="text-red-500">{errors.setExercises}</p>
                         )}
@@ -275,7 +273,7 @@ const RutinesView = () => {
                                             key={exercise.id}
                                             exercise={exercise}
                                             setNewRoutine={setFilterExercise}
-                                            ExercisesNewRoutine={ExercisesRoutine}
+                                            ExercisesNewRoutine={filterExercise}
                                         />
                                     ))}
                                 </div>
