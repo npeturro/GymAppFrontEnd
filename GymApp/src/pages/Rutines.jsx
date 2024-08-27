@@ -13,7 +13,7 @@ const Rutines = () => {
       setIsLoading(true);
       try {
         const datos = await GetAll("Routine");
-        setRoutine(datos);
+        setRoutine(datos || '');
       } catch (error) {
         console.error("Error fetching routines:", error);
       } finally {
