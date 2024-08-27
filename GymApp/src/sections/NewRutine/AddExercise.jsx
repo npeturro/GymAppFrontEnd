@@ -48,7 +48,7 @@ const AddExercise = ({ exercise, setNewRoutine, view = true }) => {
 
         <h4 className="font-bold text-white">{exercise.name}</h4>
         <p className="font-semibold text-yellow-400">
-          SERIES: {exercise.set}
+          SERIES: {exercise.series}
         </p>
         <div className="mt-4 flex gap-3">
           <StyledRating
@@ -76,6 +76,7 @@ const AddExercise = ({ exercise, setNewRoutine, view = true }) => {
 AddExercise.propTypes = {
   exercise: PropTypes.object.isRequired,
   setNewRoutine: PropTypes.func.isRequired,
+  view: PropTypes.bool,
 };
 
 export default AddExercise;
