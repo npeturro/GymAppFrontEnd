@@ -230,7 +230,7 @@ const RutinesView = () => {
                                 )}
                             </>
                         ) : (
-                            <p className="mb-4 text-white">{rutine.duration} minutos</p>
+                            <p className="mb-4 text-white">{rutine.duration >= 60 ? `${Math.floor(rutine.duration / 60)} h ${rutine.duration % 60} min` : `${rutine.duration} min`}</p>
                         )}
 
                         <hr className="mt-2" />

@@ -75,7 +75,7 @@ const RutineForm = () => {
       );
       toast.success("Rutina creada con exito");
       const rutine = response.data;
-      navigate('/rutines/view', { state: { rutine } })
+      navigate('/rutines/')
     } catch (error) {
       toast.error("Error al querer agregar la nueva rutina");
       console.error("Error al enviar los datos:", error);

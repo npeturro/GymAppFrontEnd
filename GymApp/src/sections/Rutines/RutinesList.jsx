@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import RutinesModal from "./RutinesView";
 import { useNavigate } from "react-router-dom";
 import RutinesCard from "./RutinesCard";
 import PropTypes from "prop-types";
@@ -61,7 +60,6 @@ const RutinesList = ({ rutines, isLoading }) => {
           <>
             {filteredRutine.length > 0 ? (
               filteredRutine.map((rutine) => {
-                console.log(rutine)
                 const hasMachineExercise = rutine.setExercises.some(
                   (setExercise) => {
                     const exercise = exercises.find(
@@ -88,10 +86,6 @@ const RutinesList = ({ rutines, isLoading }) => {
           </>
         )}
       </div>
-
-      {open && (
-        <RutinesModal rutine={selectedRutine} handleClose={handleClose} />
-      )}
     </>
   );
 };

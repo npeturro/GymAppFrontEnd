@@ -15,8 +15,6 @@ const StyledRating = styled(Rating)({
 
 const RutinesCard = ({ rutine, handleView, hasMachineExercise }) => {
 
-  console.log(rutine)
-
   return (
     <div className="w-full max-w-3xl mb-4 bg-slate-700 rounded-xl shadow-lg shadow-slate-950 overflow-hidden text-white flex flex-col">
       <div className="p-3">
