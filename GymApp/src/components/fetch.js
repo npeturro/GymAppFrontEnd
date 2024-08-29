@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const baseURL = 'http://gymapp-api.ddns.net/api/';
 
@@ -22,3 +23,4 @@ export const Delete = async (tabla, id) => {
         throw error;
     }
 };
+

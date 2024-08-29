@@ -5,6 +5,7 @@ import Rating from "@mui/material/Rating";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import { useNewRoutine } from "../../contexts/NewRoutineContext";
+import MachineIconMini from "../../assets/MachineIconMini";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -82,14 +83,18 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
             className="h-[75px] w-full object-cover rounded-md my-1 cursor-help"
           />
         </HtmlTooltip>
+        <div className="flex justify-between items-center">
 
-        <h4 className="font-bold text-xs">{exercise.category}</h4>
+          <h4 className="font-bold text-xs">{exercise.category}</h4>
+
+         {exercise.machine && <MachineIconMini />}
+        </div>
         <div className="my-1 bg-white min-h-[1px]"></div>
 
         <div className="text-black flex-col">
           <div className="flex justify-between mb-1">
             <label className="text-white font-semibold text-xs mr-1">
-              Repetitions:{" "}
+              Repeticiones:{" "}
             </label>
             <select className="rounded-xl p-1 bg-orange-500 font-bold text-white">
               <option value="">10</option>
@@ -117,7 +122,7 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
         <button
           onClick={handleAddExercise}
           className="bg-slate-700 text-white py-1 px-3 rounded-full font-semibold hover:bg-slate-600 active:bg-slate-500">
-          Add to Routine
+          Añadir a la rutina
         </button>
       </div>
     </div>

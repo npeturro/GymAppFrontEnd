@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
 import RutinesList from "../sections/Rutines/RutinesList";
 import { useNavigate } from "react-router-dom";
-import { GetAll } from "../components/fetch";
+import { useGET } from "../components/useGET";
 
 
 const Rutines = () => {
-  const [routine, setRoutine] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchDatos = async () => {
-      setIsLoading(true);
-      try {
-        const datos = await GetAll("Routine");
-        setRoutine(datos || '');
-      } catch (error) {
-        console.error("Error fetching routines:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchDatos();
-  }, []);
+  const [Routine, RoutineLoading, RoutineError] = useGET('Routine');
 
   const navigate = useNavigate();
 
@@ -29,7 +13,7 @@ const Rutines = () => {
     <>
       <div className="w-full h-full flex relative w-200 item-center justify-start">
         <button
-          className="fixed bottom-[50%] left-5 bg-gray-100"
+          className="fixed bottom-[50%] left-5 bg-gray-100 text-black"
           onClick={() => navigate("/")}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +36,7 @@ const Rutines = () => {
           Listado de rutinas
         </h1>
 
-         <RutinesList rutines={routine} isLoading={isLoading}/>
+         <RutinesList rutines={Routine} RoutineLoading={RoutineLoading}/>
 
       </div>
     </>
