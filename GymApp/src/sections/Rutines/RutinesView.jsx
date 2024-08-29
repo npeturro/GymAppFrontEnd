@@ -6,6 +6,9 @@ import AddExercise from "../NewRutine/AddExercise";
 import { GetAll, Delete } from "../../components/fetch";
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import Rating from "@mui/material/Rating";
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 
 const RutinesView = () => {
 
@@ -33,14 +36,14 @@ const RutinesView = () => {
 
     useEffect(() => {
         const fetchRoutineExercises = async () => {
-          setIsLoading(true);
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          setNewRoutine(rutine.setExercises);
-          setIsLoading(false);
+            setIsLoading(true);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            setNewRoutine(rutine.setExercises);
+            setIsLoading(false);
         };
-      
+
         fetchRoutineExercises();
-      }, []);
+    }, []);
 
     useEffect(() => {
         // Filtra los ejercicios basados en ExercisesRoutine
@@ -94,7 +97,7 @@ const RutinesView = () => {
             };
             setRutine(updatedRutine);
             setIsEditing(false);
-            
+
             const datosPut = {
                 id: updatedRutine.id,
                 name: updatedRutine.name,
@@ -110,7 +113,7 @@ const RutinesView = () => {
                     }
                 )),
             }
-            
+
             try {
                 const response = await axios.put(`http://gymapp-api.ddns.net/api/Routine/${updatedRutine.id}`, datosPut)
                 console.log('Respuesta del servidor:', response.data);
@@ -147,6 +150,15 @@ const RutinesView = () => {
         }
     };
 
+    const StyledRating = styled(Rating)({
+        "& .MuiRating-iconFilled": {
+            color: "#ff0a0a",
+        },
+        "& .MuiRating-iconHover": {
+            color: "#ff3d47",
+        },
+    });
+
     return (
         <>
             <div className="w-full h-full flex relative w-200 item-center justify-start">
@@ -172,8 +184,8 @@ const RutinesView = () => {
                 </button>
             </div>
             <div className="bg-gray-100 p-2">
-                <div className="max-w-5xl mx-auto p-4 min-h-screen flex flex-col rounded-lg shadow-md bg-slate-700">
-                    <div className="bg-slate-800 p-4 flex items-center justify-between">
+                <div className="max-w-5xl mx-auto p-6 min-h-screen flex flex-col rounded-lg shadow-lg bg-gradient-to-br from-gray-800 to-slate-700">
+                    <div className="bg-slate-900 p-6 rounded-t-lg flex items-center justify-between">
                         {isEditing ? (
                             <>
                                 <input
@@ -185,17 +197,15 @@ const RutinesView = () => {
                                 {errors.name && <p className="text-red-500">{errors.name}</p>}
                             </>
                         ) : (
-                            <h3 className="text-lg font-bold text-orange-500 uppercase">
-                                {rutine.name}
-                            </h3>
+                            <h3 className="text-2xl font-bold text-orange-500 uppercase">{rutine.name}</h3>
                         )}
                     </div>
 
-                    <div className="flex-grow p-6 text-white">
+                    <div className="flex-grow p-6 text-white space-y-4">
 
-                        <hr className="mt-2" />
+                        <hr className="border-gray-600" />
 
-                        <p className="font-semibold text-white">Descripción</p>
+                        <p className="font-semibold text-orange-400">Descripción</p>
                         {isEditing ? (
                             <>
                                 <textarea
@@ -209,12 +219,14 @@ const RutinesView = () => {
                                 )}
                             </>
                         ) : (
-                            <p className="mb-4 text-white">{rutine.description}</p>
+                            <p className="text-gray-300 bg-gradient-to-r from-slate-800 to-gray-700 p-4 rounded-md border-l-4 border-orange-500">
+                                {rutine.description}
+                            </p>
                         )}
 
-                        <hr className="mt-2" />
+                        <hr className="border-gray-600" />
 
-                        <p className="font-semibold text-white">Duración</p>
+                        <p className="font-semibold text-orange-400">Duración</p>
                         {isEditing ? (
                             <>
                                 <input
@@ -230,12 +242,12 @@ const RutinesView = () => {
                                 )}
                             </>
                         ) : (
-                            <p className="mb-4 text-white">{rutine.duration >= 60 ? `${Math.floor(rutine.duration / 60)} h ${rutine.duration % 60} min` : `${rutine.duration} min`}</p>
+                            <p className="text-white text-xl font-bold">{rutine.duration >= 60 ? `${Math.floor(rutine.duration / 60)} h ${rutine.duration % 60} min` : `${rutine.duration} min`}</p>
                         )}
 
-                        <hr className="mt-2" />
+                        <hr className="border-gray-600" />
 
-                        <p className="font-semibold text-white">Dificultad</p>
+                        <p className="font-semibold text-orange-400">Dificultad</p>
                         {isEditing ? (
                             <>
                                 <input
@@ -251,13 +263,32 @@ const RutinesView = () => {
                                 )}
                             </>
                         ) : (
-                            <p className="mb-4 text-white">{rutine.difficulty}</p>
+                            <div className="flex text-xl ml-2">
+                                <StyledRating
+                                    className="font-black"
+                                    name="customized-color"
+                                    defaultValue={rutine.difficulty}
+                                    getLabelText={(value) =>
+                                        `${value} Flame${value !== 1 ? "s" : ""}`
+                                    }
+                                    precision={1}
+                                    readOnly
+                                    icon={<WhatshotIcon fontSize="inherit" />}
+                                    emptyIcon={
+                                        <WhatshotIcon
+                                            fontSize="inherit"
+                                            style={{ opacity: 0.7 }}
+                                        />
+                                    }
+                                    max={3}
+                                />
+                            </div>
                         )}
 
-                        <hr className="mt-2" />
+                        <hr className="border-gray-600" />
 
-                        <p className="font-semibold text-white">Ejercicios</p>
-                        <div className="flex flex-wrap justify-center">
+                        <p className="font-semibold text-orange-400">Ejercicios</p>
+                        <div className="flex flex-wrap justify-center pt-4">
                             {isLoading ? <CircularProgress color="inherit" /> : filterExercise.map((exercise) => (
                                 <AddExercise
                                     key={exercise.id}
