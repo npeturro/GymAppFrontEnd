@@ -4,25 +4,15 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import { GetAll } from "../../components/fetch";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useNavigate } from "react-router-dom";
+import { useGET } from "../../components/useGET";
 
 const RutineForm = () => {
   const navigate = useNavigate();
   
-  const [exercises, setExercises] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchDatos = async () => {
-      setIsLoading(true);
-      const datos = await GetAll("Exercise");
-      setExercises(datos);
-      setIsLoading(false);
-    };
-    fetchDatos();
-  }, []);
+ 
+  const [Exercises, ExercisesLoading, ExerciseError] = useGET('Exercise');
 
   const [ExercisesNewRoutine, setNewRoutine] = useState([]);
 
@@ -191,11 +181,11 @@ const RutineForm = () => {
         <h3 className="text-xl text-white font-semibold mb-4">
           Lista de Ejercicios
         </h3>
-        {isLoading ? (
+        {ExercisesLoading ? (
           <LinearProgress color="inherit" />
         ) : (
           <div className="flex flex-wrap gap-6 justify-center">
-            {exercises.map((exercise) => (
+            {Exercises.map((exercise) => (
               <ExerciseCard
                 key={exercise.id}
                 exercise={exercise}
@@ -205,6 +195,13 @@ const RutineForm = () => {
             ))}
           </div>
         )}
+        {
+          ExerciseError && (
+            <div className="text-red-500 text-center text-sm mb-4">
+              Hubo un error al cargar los ejercicios
+            </div>
+          )
+        }
         <button
           type="submit"
           className="mt-6 w-full px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-400 active:bg-orange-300">
