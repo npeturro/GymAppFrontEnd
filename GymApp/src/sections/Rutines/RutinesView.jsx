@@ -10,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import Rating from "@mui/material/Rating";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import { useGET } from "../../components/useGET";
+import ModalConfirm from "./ModalConfirm";
 
 const RutinesView = () => {
   const [Exercises, ExercisesLoading, ExerciseError] = useGET("Exercise");
@@ -25,6 +26,10 @@ const RutinesView = () => {
   const [ExercisesRoutine, setNewRoutine] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filterExercise, setFilterExercise] = useState([]);
+  const [open, setOpen] = useState(false);
+
+
+  const handleOpen = () => setOpen(!open);
 
   useEffect(() => {
     const fetchRoutineExercises = async () => {
@@ -108,7 +113,6 @@ const RutinesView = () => {
           `http://gymapp-api.ddns.net/api/Routine/${updatedRutine.id}`,
           datosPut
         );
-        console.log("Respuesta del servidor:", response.data);
         setRutine(updatedRutine);
         setIsEditing(false);
         toast.success("Rutina guardada con éxito");
@@ -129,10 +133,10 @@ const RutinesView = () => {
   };
 
   const handleDelete = async () => {
-    console.log(rutine.id);
     // navigate("/rutines");
     try {
       await Delete("Routine", rutine.id);
+      handleOpen()
       toast.success("Rutina eliminada con éxito");
       navigate("/rutines");
     } catch (error) {
@@ -351,12 +355,13 @@ const RutinesView = () => {
             )}
             <button
               className="bg-gray-600 text-white py-2 px-4 rounded-full font-semibold cursor-pointer border-none"
-              onClick={handleDelete}>
+              onClick={handleOpen}>
               Eliminar
             </button>
           </div>
         </div>
       </div>
+      {open && <ModalConfirm open={open} handleOpen={handleOpen} handleDelete={handleDelete}/>}
     </>
   );
 };

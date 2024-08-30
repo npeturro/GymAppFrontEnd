@@ -65,9 +65,12 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
       </div>
 
       <div className="p-2">
-        <h3 className="text-sm font-bold text-[#F97316] uppercase">
-          {exercise.name}
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-bold text-[#F97316] uppercase">
+            {exercise.name}
+          </h3>
+          {exercise.machine && <MachineIconMini className="ml-2" />}
+        </div>
         <HtmlTooltip
           name={
             <React.Fragment>
@@ -83,11 +86,8 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
             className="h-[75px] w-full object-cover rounded-md my-1 cursor-help"
           />
         </HtmlTooltip>
-        <div className="flex justify-between items-center">
-
+        <div className="flex items-center">
           <h4 className="font-bold text-xs">{exercise.category}</h4>
-
-         {exercise.machine && <MachineIconMini />}
         </div>
         <div className="my-1 bg-white min-h-[1px]"></div>
 

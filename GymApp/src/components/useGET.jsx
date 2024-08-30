@@ -14,7 +14,6 @@ export const useGET = (consult) => {
       const fetchData = async () => {
         setLoading(true);
         try {
-          console.log(`${baseURL}${consult}`);
           const response = await axios.get(`${baseURL}${consult}`);
   
           if (response.status < 200 || response.status >= 300) {
