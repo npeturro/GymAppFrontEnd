@@ -72,7 +72,7 @@ const ExerciseCard = ({ exercise, setNewRoutine, ExercisesNewRoutine }) => {
           {exercise.machine && <MachineIconMini className="ml-2" />}
         </div>
         <HtmlTooltip
-          name={
+          title={
             <React.Fragment>
               <h4 className="font-bold uppercase text-[10px]">
                 {exercise.name}
